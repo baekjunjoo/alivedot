@@ -3,6 +3,7 @@ import {
   Bluetooth,
   Cable,
   Check,
+  ChevronLeft,
   ChevronRight,
   CircleAlert,
   Clapperboard,
@@ -34,7 +35,7 @@ type AnimalCategory = "water" | "sky" | "land" | "small";
 const DOT_COLUMNS = 60;
 const DOT_ROWS = 40;
 const FRAME_COUNT = 6;
-const GENERATED_IDS = new Set<GeneratedAnimalId>(["fish", "bird", "frog", "rabbit"]);
+const GENERATED_IDS = new Set<GeneratedAnimalId>(Object.keys(generatedMotionHex) as GeneratedAnimalId[]);
 
 const animalCategories: Array<{ id: AnimalCategory | "all"; label: string; emoji: string }> = [
   { id: "all", label: "모두", emoji: "✨" },
@@ -106,6 +107,7 @@ export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<AnimalCategory | "all">("all");
   const [frameIndex, setFrameIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isSlowExploring, setIsSlowExploring] = useState(false);
   const [speed, setSpeed] = useState(2.5);
   const [isExportingVideo, setIsExportingVideo] = useState(false);
   const [connection, setConnection] = useState<ConnectionState>("idle");
@@ -163,6 +165,7 @@ export default function Home() {
   }, [writeToDevice]);
 
   const startPlayback = useCallback(() => {
+    setIsSlowExploring(false);
     playRef.current = true;
     setIsPlaying(true);
     setLog(deviceRef.current ? "Higgsfield 영상 프레임을 닷패드에 차례대로 보내고 있어요." : "화면에서 실제 동작 프레임을 보고 있어요. 닷패드를 연결하면 촉각으로도 느낄 수 있어요.");
@@ -179,6 +182,7 @@ export default function Home() {
     stopPlayback(`${target.name}의 실제 동작 프레임을 준비했어요.`);
     setSelectedAnimal(animal as GeneratedAnimalId);
     setFrameIndex(0);
+    setIsSlowExploring(false);
     setQuizChoice(null);
     setQuizResult("ready");
   };
@@ -199,6 +203,40 @@ export default function Home() {
     window.speechSynthesis.speak(speech);
     setLog(`${activeAnimal.name}의 동작 순서를 음성으로 안내하고 있어요.`);
   };
+
+  const speakFrameGuide = useCallback((index: number) => {
+    const frameNumber = index + 1;
+    const guides = [
+      `${activeAnimal.name}의 첫 번째 자세예요. 몸의 전체 모양을 천천히 만져 보세요.`,
+      `두 번째 자세예요. ${activeAnimal.feature} 움직이기 시작해요.`,
+      `세 번째 자세예요. 가장 크게 달라진 부분을 찾아보세요.`,
+      `네 번째 자세예요. 동작이 반대쪽으로 바뀌는 느낌을 비교해 보세요.`,
+      `다섯 번째 자세예요. 처음 자세와 무엇이 다른지 손끝으로 확인해 보세요.`,
+      `여섯 번째 자세예요. 한 번의 동작 순서가 끝났어요. 처음 프레임으로 돌아가 비교해 볼까요?`,
+    ];
+    if (!("speechSynthesis" in window)) {
+      setLog(`느린 탐색 ${frameNumber}번 프레임: ${guides[index]}`);
+      return;
+    }
+    window.speechSynthesis.cancel();
+    const speech = new SpeechSynthesisUtterance(guides[index]);
+    speech.lang = "ko-KR";
+    speech.rate = 0.7;
+    speech.pitch = 1.06;
+    speech.onstart = () => setIsSpeaking(true);
+    speech.onend = () => setIsSpeaking(false);
+    speech.onerror = () => setIsSpeaking(false);
+    window.speechSynthesis.speak(speech);
+    setLog(`느린 탐색 ${frameNumber}번 프레임을 닷패드에 보냈어요. 설명을 들으며 천천히 만져 보세요.`);
+  }, [activeAnimal]);
+
+  const exploreFrame = useCallback((nextIndex: number) => {
+    stopPlayback("느린 탐색 모드로 바꿨어요. 프레임을 하나씩 느껴 보세요.");
+    setIsSlowExploring(true);
+    setFrameIndex(nextIndex);
+    writeToDevice(framesRef.current[nextIndex]);
+    speakFrameGuide(nextIndex);
+  }, [speakFrameGuide, stopPlayback, writeToDevice]);
 
   const answerQuiz = (choice: number) => {
     if (quizResult === "correct") return;
@@ -385,7 +423,7 @@ export default function Home() {
         <aside className="control-rail">
           <section className="rail-section catalog-section">
             <div className="section-heading"><span>01</span><h2>동물 도감</h2><b className="catalog-count">{animals.length}</b></div>
-            <p className="catalog-note"><Clapperboard size={14} />실제 동작 프레임 4종 완성</p>
+            <p className="catalog-note"><Clapperboard size={14} />실제 동작 프레임 17종 완성</p>
             <div className="category-tabs" role="tablist" aria-label="동물 카테고리">
               {animalCategories.map((category) => <button key={category.id} className={selectedCategory === category.id ? "active" : ""} onClick={() => setSelectedCategory(category.id)} role="tab" aria-selected={selectedCategory === category.id}><span>{category.emoji}</span>{category.label}</button>)}
             </div>
@@ -422,6 +460,10 @@ export default function Home() {
           <div className="stage-bar"><div><p className="eyebrow">HIGGSFIELD MOTION · 6 FRAMES · 60 × 40 DOTS</p><h2><span>{activeAnimal.name}</span> {activeAnimal.action}</h2></div><div className="matrix-stat"><span>60</span><i>×</i><span>40</span><small>2,400 DOTS</small></div></div>
           <div className="preview-shell"><div className="preview-corner tl" /><div className="preview-corner tr" /><div className="preview-corner bl" /><div className="preview-corner br" /><div className="scanline" /><DotMatrix grid={currentGrid} /><div className="preview-footer"><span>실제 동작 {String(frameIndex + 1).padStart(2, "0")} / {String(FRAME_COUNT).padStart(2, "0")}</span><span>Higgsfield 영상 프레임</span></div></div>
           <div className="transport-panel"><div className="transport-main"><button className={`play-button ${isPlaying ? "playing" : ""}`} onClick={() => (isPlaying ? stopPlayback() : startPlayback())}>{isPlaying ? <Pause fill="currentColor" size={18} /> : <Play fill="currentColor" size={18} />}{isPlaying ? "잠시 멈추기" : "동작 재생"}</button><button className="frame-button" onClick={() => { stopPlayback("다음 실제 동작을 보여 줬어요."); const next = (frameIndex + 1) % frames.length; setFrameIndex(next); writeToDevice(frames[next]); }} title="다음 동작 보내기"><Send size={16} /></button><button className="video-button" onClick={exportVideo} disabled={isExportingVideo} title="WebM 영상 저장"><Video size={16} />{isExportingVideo ? "만드는 중" : "영상 저장"}</button></div><div className="speed-control"><Gauge size={15} /><label htmlFor="speed">속도</label><input id="speed" type="range" min="0.5" max="7" step="0.5" value={speed} onChange={(event) => setSpeed(Number(event.target.value))} /><b>{speed.toFixed(1)} fps</b></div></div>
+          <div className={`slow-explore ${isSlowExploring ? "active" : ""}`}>
+            <div className="slow-explore-copy"><span className="slow-explore-icon"><Volume2 size={18} /></span><div><p>느린 탐색 모드</p><small>프레임을 하나씩 넘기고 설명을 들으며 손끝으로 확인해요.</small></div></div>
+            <div className="slow-explore-controls"><button className="slow-frame-button" onClick={() => exploreFrame((frameIndex + frames.length - 1) % frames.length)} aria-label="이전 프레임 느린 탐색"><ChevronLeft size={20} />이전</button><button className="slow-listen-button" onClick={() => exploreFrame(frameIndex)}><Volume2 size={18} />{isSlowExploring ? `프레임 ${frameIndex + 1} 다시 듣기` : "느린 탐색 시작"}</button><button className="slow-frame-button" onClick={() => exploreFrame((frameIndex + 1) % frames.length)} aria-label="다음 프레임 느린 탐색">다음<ChevronRight size={20} /></button></div>
+          </div>
         </section>
       </section>
       <footer className="status-deck"><div className="status-message"><span className={connection === "error" ? "status-icon error" : "status-icon"}>{connection === "error" ? <CircleAlert size={16} /> : connection === "connected" ? <Check size={16} /> : <Sparkles size={16} />}</span><p>{log}</p></div><div className="sdk-badge"><Waves size={14} />DOTPAD WEB SDK <b>v3.0.2</b></div></footer>

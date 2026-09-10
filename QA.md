@@ -25,3 +25,21 @@
 - The generated WebM export was tested with the frog motion. It completed and created `frog-higgsfield-tactile-motion.webm` (141,033 bytes) in the browser downloads folder.
 - The frog movement quiz was verified: selecting `깡충 뛰기` awarded one star and returned the positive feedback message.
 - Full-page 390×844 mobile visual validation confirmed the matrix and play/export controls appear before the long catalog, and all catalog, explanation, quiz, pipeline, and connection controls remain legible and usable below it.
+
+## Full 17-animal catalog and slow exploration validation — 2026-09-11
+
+The catalog now contains six tactile pose frames for all seventeen animals. The existing fish, bird, frog, and rabbit sequences remain in place. Higgsfield GPT Image 2.5 produced a further seventy-eight high-contrast source poses for dolphin, whale, octopus, turtle, owl, butterfly, bee, cat, dog, lion, elephant, monkey, and snail. Each source was cropped around its black silhouette, resized to preserve a large touch-readable form, lightly thickened, and encoded as a 60×40 monochrome tactile grid. The conversion output reports a non-zero foreground-dot count for all 78 new frames.
+
+| Verification area | Result |
+|---|---|
+| TypeScript and production build | Passed with `pnpm check` and `pnpm build` |
+| Catalog availability | All 17 animal controls are active; no card remains marked as pending |
+| Generated source coverage | 13 new animals × 6 frames = 78 converted tactile grids |
+| Desktop visual review | The full catalog badge reads 17 and the 60×40 preview renders generated silhouettes clearly |
+| Mobile visual review | The play, speed, and slow-exploration controls remain before the scrollable catalog at 390×844 |
+| Dolphin selection | Selecting dolphin loaded its generated six-frame sequence and updated the learning prompt |
+| Slow exploration mode | Starting manual mode changed the control to frame 1 replay, sent the first frame, and requested a Korean voice guide |
+| Manual next frame | Moving from dolphin frame 1 to frame 2 updated the preview label and silhouette, while retaining voice guidance |
+| Monkey selection | Selecting the newly generated monkey sequence loaded its hop-pose frame 1 without a pending-state message |
+
+A physical DotPad was not available in the preview environment, so Bluetooth/USB pin output requires final hardware verification. The browser flow calls the same existing DotPad SDK graphic-output routine for automatic playback and each manual slow-exploration step.
