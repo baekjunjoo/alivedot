@@ -27,3 +27,59 @@
 .video-button:hover:not(:disabled) { background:rgba(199,183,255,.22); border-color:var(--lavender); }
 .video-button:active { transform:scale(.97); }
 @media (max-width:600px) { .auto-source { align-items:flex-start; } .auto-source button { align-self:center; } .video-button { padding:0 9px; } }
+
+/* Learning playground upgrade: large, cheerful controls for younger learners */
+.catalog-section { background:linear-gradient(145deg,rgba(106,184,255,.10),rgba(119,243,189,.045)); }
+.section-heading h2 { font-size:13px; }
+.catalog-count,.score-chip { margin-left:auto; padding:4px 8px; border:1px solid rgba(223,255,112,.35); border-radius:999px; color:var(--lime); background:rgba(223,255,112,.08); font:700 9px "DM Mono",monospace; }
+.score-chip { color:#ffe992; border-color:rgba(255,233,146,.4); background:rgba(255,233,146,.08); }
+.category-tabs { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:5px; margin:11px 0 10px; }
+.category-tabs button { min-height:48px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; border:1px solid var(--hairline); border-radius:9px; background:rgba(255,255,255,.025); color:#aab8ad; font:700 8px "Gowun Dodum",sans-serif; transition:transform .16s cubic-bezier(.23,1,.32,1),background .16s,border-color .16s; }
+.category-tabs button span { font-size:16px; line-height:1; }
+.category-tabs button:hover,.category-tabs button.active { border-color:rgba(223,255,112,.72); color:var(--lime); background:rgba(223,255,112,.12); }
+.category-tabs button:active,.catalog-card:active,.quiz-options button:active,.voice-button:active { transform:scale(.96); }
+.catalog-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; max-height:327px; padding-right:3px; overflow-y:auto; scrollbar-color:rgba(223,255,112,.55) transparent; }
+.catalog-card { position:relative; min-height:68px; display:flex; align-items:center; gap:8px; padding:9px; text-align:left; border:1px solid var(--hairline); border-radius:10px; background:rgba(6,16,25,.46); color:#d9e4dc; transition:transform .16s cubic-bezier(.23,1,.32,1),border-color .16s,background .16s; }
+.catalog-card:hover { background:rgba(255,255,255,.045); border-color:rgba(198,183,255,.55); }
+.catalog-card.selected { border-color:var(--lime); background:linear-gradient(135deg,rgba(223,255,112,.16),rgba(119,243,189,.07)); box-shadow:inset 0 0 0 1px rgba(223,255,112,.12); }
+.catalog-emoji { width:32px; height:32px; display:grid; flex:0 0 auto; place-items:center; border-radius:10px; background:rgba(255,255,255,.07); font-size:22px; }
+.catalog-card b { display:block; color:#fbfff5; font:700 12px "Gowun Dodum",sans-serif; }
+.catalog-card small { display:block; max-width:95px; margin-top:2px; overflow:hidden; color:#9aac9e; font:400 8px "Gowun Dodum",sans-serif; line-height:1.25; text-overflow:ellipsis; white-space:nowrap; }
+.catalog-card .card-check { position:absolute; top:7px; right:7px; color:var(--lime); }
+.mission-box { background:linear-gradient(150deg,rgba(119,243,189,.12),rgba(6,19,31,.78)); }
+.mission-hero { display:flex; align-items:flex-start; gap:10px; }
+.mission-hero > span { width:44px; height:44px; display:grid; flex:0 0 auto; place-items:center; border-radius:14px; background:rgba(119,243,189,.13); font-size:28px; }
+.mission-box .mission-title { margin:0 0 5px; font-size:14px; }
+.mission-box .mission-copy { margin:0; font-size:10px; line-height:1.55; }
+.voice-button { width:100%; min-height:52px; display:flex; align-items:center; justify-content:center; gap:8px; margin:12px 0 9px; border:1px solid rgba(119,243,189,.55); border-radius:10px; background:linear-gradient(135deg,#7bf3bd,#b7ffd0); color:#083021; font:800 12px "Gowun Dodum",sans-serif; box-shadow:0 8px 20px rgba(119,243,189,.12); transition:transform .16s cubic-bezier(.23,1,.32,1),filter .16s; }
+.voice-button:hover { filter:brightness(1.08); }
+.voice-button.speaking { animation:voicePulse 1s ease-in-out infinite; }
+.mission-box .mission-prompt { margin-top:0; padding:9px; border-radius:9px; font-size:10px; }
+.quiz-section { border:1px solid rgba(255,233,146,.20); background:linear-gradient(145deg,rgba(255,202,79,.11),rgba(198,183,255,.07)); }
+.quiz-question { margin:0 0 10px; color:#f9f7ed; font:600 12px "Gowun Dodum",sans-serif; line-height:1.5; }
+.quiz-options { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
+.quiz-options button { min-height:46px; display:flex; align-items:center; gap:7px; padding:7px; border:1px solid rgba(255,255,255,.12); border-radius:9px; background:rgba(8,18,28,.66); color:#e9f0e8; text-align:left; font:700 10px "Gowun Dodum",sans-serif; transition:transform .16s cubic-bezier(.23,1,.32,1),border-color .16s,background .16s; }
+.quiz-options button span { width:23px; height:23px; display:grid; flex:0 0 auto; place-items:center; border-radius:50%; background:rgba(255,255,255,.1); color:#fff5bc; font:700 10px "DM Mono",monospace; }
+.quiz-options button:hover:not(:disabled),.quiz-options button.chosen { border-color:#ffe992; background:rgba(255,233,146,.14); }
+.quiz-options button.answer { border-color:var(--electric); background:rgba(119,243,189,.18); color:#dffff0; }
+.quiz-options button:disabled { cursor:default; }
+.quiz-feedback { min-height:30px; margin:10px 0 0; color:#d7d2bb; font:500 10px "Gowun Dodum",sans-serif; line-height:1.45; }
+.quiz-section.correct .quiz-feedback { color:var(--electric); }
+.quiz-section.wrong .quiz-feedback { color:#ffd28c; }
+.source-section .auto-source { padding:12px; }
+.source-section .auto-source button,.browse-link { min-height:36px; padding:7px 10px; font-size:10px; }
+.source-section .upload-zone { min-height:132px; padding:13px; }
+.file-input { display:none; }
+.source-section select { min-height:42px; font-size:11px; }
+.connection-button { min-height:64px; padding:12px; border-radius:10px; }
+.connection-button b { font-size:12px; }
+.connection-button small { margin-top:2px; font-size:9px; }
+.compact-button { min-height:42px; padding:0 14px; font-size:11px; border-radius:9px; }
+.play-button { min-height:52px; padding:12px 21px; border-radius:10px; font-size:13px; }
+.frame-button,.video-button { min-height:52px; height:52px; border-radius:10px; }
+.video-button { padding:0 14px; font-size:11px; }
+@keyframes voicePulse { 50% { transform:translateY(-1px); box-shadow:0 0 0 6px rgba(119,243,189,.08),0 8px 22px rgba(119,243,189,.2); } }
+@media (max-width:900px) { .catalog-grid { max-height:none; } }
+@media (max-width:600px) { .category-tabs { grid-template-columns:repeat(5,minmax(54px,1fr)); overflow-x:auto; padding-bottom:2px; } .category-tabs button { min-width:54px; } .catalog-grid { grid-template-columns:repeat(2,minmax(0,1fr)); max-height:350px; } .catalog-card { min-height:72px; } .catalog-card small { max-width:120px; } .transport-main { width:100%; flex-wrap:wrap; } .play-button { flex:1; justify-content:center; } .video-button { flex:1; justify-content:center; } }
+
+.workspace .stage { justify-content:flex-start; }

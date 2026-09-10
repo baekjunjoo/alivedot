@@ -32,12 +32,24 @@ import {
 type Grid = boolean[][];
 type ConnectionState = "idle" | "connecting" | "connected" | "error";
 type MotionType = "shift" | "scan" | "pulse";
-type AnimalId = "fish" | "bird" | "frog" | "rabbit";
+type BuiltInAnimalId = "fish" | "bird" | "frog" | "rabbit";
+type AnimalId = BuiltInAnimalId | "dolphin" | "whale" | "octopus" | "turtle" | "owl" | "butterfly" | "bee" | "cat" | "dog" | "lion" | "elephant" | "monkey" | "snail";
+type AnimalCategory = "water" | "sky" | "land" | "small";
 type SourceMode = "builtIn" | "autoTactile" | "upload";
 
 const DOT_COLUMNS = 60;
 const DOT_ROWS = 40;
 const FRAME_COUNT = 6;
+
+const animalCategories: Array<{ id: AnimalCategory | "all"; label: string; emoji: string }> = [
+  { id: "all", label: "모두", emoji: "✨" },
+  { id: "water", label: "물속", emoji: "🌊" },
+  { id: "sky", label: "하늘", emoji: "☁️" },
+  { id: "land", label: "땅위", emoji: "🌳" },
+  { id: "small", label: "작은 친구", emoji: "🌼" },
+];
+
+const quizOptions = ["헤엄치기", "날기", "깡충 뛰기", "걸어가기"];
 
 const animals: Array<{
   id: AnimalId;
@@ -45,20 +57,31 @@ const animals: Array<{
   action: string;
   instruction: string;
   feature: string;
-  icon: "fish" | "bird" | "frog" | "rabbit";
+  voice: string;
+  emoji: string;
+  category: AnimalCategory;
+  iconId: string;
+  quizAnswer: number;
+  builtIn?: boolean;
 }> = [
-  { id: "fish", name: "물고기", action: "헤엄쳐요", instruction: "커다란 꼬리가 좌우로 흔들려요.", feature: "꼬리를 찾아보세요", icon: "fish" },
-  { id: "bird", name: "새", action: "날아가요", instruction: "넓은 날개가 위아래로 퍼져요.", feature: "날개를 찾아보세요", icon: "bird" },
-  { id: "frog", name: "개구리", action: "점프해요", instruction: "통통한 몸과 긴 뒷다리가 보여요.", feature: "긴 다리를 찾아보세요", icon: "frog" },
-  { id: "rabbit", name: "토끼", action: "깡충깡충", instruction: "긴 귀가 위에 있고, 동그란 꼬리가 뒤에 있어요.", feature: "긴 귀를 찾아보세요", icon: "rabbit" },
+  { id: "fish", name: "물고기", action: "헤엄쳐요", instruction: "커다란 꼬리가 좌우로 흔들려요.", feature: "꼬리를 찾아보세요", voice: "물고기는 물속에서 꼬리를 좌우로 흔들며 헤엄쳐요. 꼬리와 지느러미를 찾아볼까요?", emoji: "🐟", category: "water", iconId: "mdi:fish", quizAnswer: 0, builtIn: true },
+  { id: "bird", name: "새", action: "날아가요", instruction: "넓은 날개가 위아래로 퍼져요.", feature: "날개를 찾아보세요", voice: "새는 큰 날개를 위아래로 움직이며 하늘을 날아요. 양쪽 날개를 찾아볼까요?", emoji: "🐦", category: "sky", iconId: "mdi:bird", quizAnswer: 1, builtIn: true },
+  { id: "frog", name: "개구리", action: "점프해요", instruction: "통통한 몸과 긴 뒷다리가 보여요.", feature: "긴 다리를 찾아보세요", voice: "개구리는 긴 뒷다리로 폴짝폴짝 점프해요. 길게 뻗은 다리를 찾아볼까요?", emoji: "🐸", category: "land", iconId: "fa6-solid:frog", quizAnswer: 2, builtIn: true },
+  { id: "rabbit", name: "토끼", action: "깡충깡충", instruction: "긴 귀가 위에 있고, 동그란 꼬리가 뒤에 있어요.", feature: "긴 귀를 찾아보세요", voice: "토끼는 긴 귀를 세우고 깡충깡충 뛰어요. 위로 쭉 뻗은 귀를 찾아볼까요?", emoji: "🐰", category: "land", iconId: "mdi:rabbit", quizAnswer: 2, builtIn: true },
+  { id: "dolphin", name: "돌고래", action: "물살을 가르며 헤엄쳐요", instruction: "길쭉한 몸과 뾰족한 등지느러미가 있어요.", feature: "등지느러미를 찾아보세요", voice: "돌고래는 길쭉한 몸으로 물살을 가르며 헤엄쳐요. 뾰족한 등지느러미가 보여요.", emoji: "🐬", category: "water", iconId: "mdi:dolphin", quizAnswer: 0 },
+  { id: "whale", name: "고래", action: "천천히 헤엄쳐요", instruction: "아주 큰 몸과 넓은 꼬리지느러미가 있어요.", feature: "넓은 꼬리를 찾아보세요", voice: "고래는 아주 큰 몸으로 바다를 천천히 헤엄쳐요. 넓적한 꼬리지느러미를 찾아보세요.", emoji: "🐳", category: "water", iconId: "icon-park-solid:whale", quizAnswer: 0 },
+  { id: "octopus", name: "문어", action: "다리를 흔들며 움직여요", instruction: "동그란 머리 아래에 여러 개의 긴 다리가 있어요.", feature: "여러 다리를 세어보세요", voice: "문어는 동그란 머리 아래의 여러 다리를 흔들며 움직여요. 긴 다리를 세어볼까요?", emoji: "🐙", category: "water", iconId: "boxicons:octopus", quizAnswer: 0 },
+  { id: "turtle", name: "거북이", action: "느긋하게 헤엄쳐요", instruction: "둥근 등껍질과 네 개의 다리가 있어요.", feature: "둥근 등껍질을 찾아보세요", voice: "바다거북은 둥근 등껍질을 등에 지고 물속을 느긋하게 헤엄쳐요.", emoji: "🐢", category: "water", iconId: "mdi:turtle", quizAnswer: 0 },
+  { id: "owl", name: "부엉이", action: "날개를 펴고 날아요", instruction: "커다란 둥근 눈과 넓은 날개가 있어요.", feature: "큰 눈을 찾아보세요", voice: "부엉이는 커다란 눈으로 밤을 보고 넓은 날개를 펴고 날아요.", emoji: "🦉", category: "sky", iconId: "mdi:owl", quizAnswer: 1 },
+  { id: "butterfly", name: "나비", action: "팔랑팔랑 날아요", instruction: "좌우로 넓게 펼쳐진 두 날개가 있어요.", feature: "두 날개를 찾아보세요", voice: "나비는 예쁜 두 날개를 팔랑팔랑 움직이며 꽃 사이를 날아요.", emoji: "🦋", category: "sky", iconId: "mdi:butterfly", quizAnswer: 1 },
+  { id: "bee", name: "꿀벌", action: "윙윙 날아요", instruction: "작은 몸과 빠르게 움직이는 두 날개가 있어요.", feature: "작은 날개를 찾아보세요", voice: "꿀벌은 작은 날개를 빠르게 움직이며 윙윙 날아요. 꿀을 찾으러 꽃으로 가요.", emoji: "🐝", category: "sky", iconId: "mdi:bee", quizAnswer: 1 },
+  { id: "cat", name: "고양이", action: "사뿐사뿐 걸어요", instruction: "뾰족한 귀와 긴 꼬리가 있어요.", feature: "뾰족한 귀를 찾아보세요", voice: "고양이는 푹신한 발로 사뿐사뿐 걸어요. 위로 뾰족한 귀와 긴 꼬리를 찾아보세요.", emoji: "🐱", category: "land", iconId: "mdi:cat", quizAnswer: 3 },
+  { id: "dog", name: "강아지", action: "꼬리를 흔들며 걸어요", instruction: "네 개의 다리와 흔드는 꼬리가 있어요.", feature: "흔드는 꼬리를 찾아보세요", voice: "강아지는 네 다리로 걸으며 반가우면 꼬리를 살랑살랑 흔들어요.", emoji: "🐶", category: "land", iconId: "mdi:dog", quizAnswer: 3 },
+  { id: "lion", name: "사자", action: "튼튼하게 걸어요", instruction: "커다란 머리 주변에 갈기가 있어요.", feature: "둥근 갈기를 찾아보세요", voice: "사자는 튼튼한 네 다리로 걸어요. 머리 주변의 둥근 갈기가 멋져요.", emoji: "🦁", category: "land", iconId: "griddy-icons:lion", quizAnswer: 3 },
+  { id: "elephant", name: "코끼리", action: "쿵쿵 걸어요", instruction: "긴 코와 커다란 귀가 있어요.", feature: "긴 코를 찾아보세요", voice: "코끼리는 긴 코를 흔들며 커다란 발로 쿵쿵 걸어요. 긴 코를 찾아볼까요?", emoji: "🐘", category: "land", iconId: "mdi:elephant", quizAnswer: 3 },
+  { id: "monkey", name: "원숭이", action: "나무에서 폴짝 뛰어요", instruction: "긴 팔과 구부러진 꼬리가 있어요.", feature: "긴 팔을 찾아보세요", voice: "원숭이는 긴 팔로 나뭇가지를 잡고 폴짝폴짝 뛰어요.", emoji: "🐵", category: "land", iconId: "icon-park-solid:monkey", quizAnswer: 2 },
+  { id: "snail", name: "달팽이", action: "천천히 기어요", instruction: "둥근 집과 두 개의 더듬이가 있어요.", feature: "동그란 집을 찾아보세요", voice: "달팽이는 등에 동그란 집을 지고 아주 천천히 기어가요. 두 더듬이를 찾아보세요.", emoji: "🐌", category: "small", iconId: "mdi:snail", quizAnswer: 3 },
 ];
-
-const autoTactileIcons: Record<AnimalId, string> = {
-  fish: "mdi:fish",
-  bird: "mdi:bird",
-  frog: "fa6-solid:frog",
-  rabbit: "mdi:rabbit",
-};
 
 const emptyGrid = (): Grid => Array.from({ length: DOT_ROWS }, () => Array(DOT_COLUMNS).fill(false));
 
@@ -169,7 +192,7 @@ function rabbitFrame(phase: number): Grid {
   return grid;
 }
 
-function makeAnimalFrame(animal: AnimalId, phase: number) {
+function makeAnimalFrame(animal: BuiltInAnimalId, phase: number) {
   if (animal === "fish") return fishFrame(phase);
   if (animal === "bird") return birdFrame(phase);
   if (animal === "frog") return frogFrame(phase);
@@ -239,6 +262,7 @@ function AnimalIcon({ type, size = 19 }: { type: "fish" | "bird" | "frog" | "rab
 
 export default function Home() {
   const [selectedAnimal, setSelectedAnimal] = useState<AnimalId>("fish");
+  const [selectedCategory, setSelectedCategory] = useState<AnimalCategory | "all">("all");
   const [baseGrid, setBaseGrid] = useState<Grid>(() => makeAnimalFrame("fish", 0));
   const [sourceMode, setSourceMode] = useState<SourceMode>("builtIn");
   const [isLoadingAutoSource, setIsLoadingAutoSource] = useState(false);
@@ -251,6 +275,10 @@ export default function Home() {
   const [sourceName, setSourceName] = useState("물고기 · 헤엄치기");
   const [connection, setConnection] = useState<ConnectionState>("idle");
   const [deviceName, setDeviceName] = useState<string | null>(null);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [quizChoice, setQuizChoice] = useState<number | null>(null);
+  const [quizResult, setQuizResult] = useState<"ready" | "correct" | "wrong">("ready");
+  const [quizScore, setQuizScore] = useState(0);
   const [log, setLog] = useState("동물을 고르고 재생을 눌러, 움직임을 먼저 눈으로 확인해 보세요.");
   const sdkRef = useRef<DotPadSDK | null>(null);
   const deviceRef = useRef<DotDevice | null>(null);
@@ -261,15 +289,17 @@ export default function Home() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const activeAnimal = animals.find((animal) => animal.id === selectedAnimal) ?? animals[0];
-  const isCustomImage = sourceMode !== "builtIn";
+  const catalogAnimals = selectedCategory === "all" ? animals : animals.filter((animal) => animal.category === selectedCategory);
+  const isBuiltIn = sourceMode === "builtIn" && activeAnimal.builtIn;
+  const isCustomImage = !isBuiltIn;
   const displayName = sourceMode === "autoTactile" ? "Auto Tactile 그림" : sourceMode === "upload" ? "내 그림" : activeAnimal.name;
   const displayAction = sourceMode === "builtIn" ? activeAnimal.action : "움직여요";
-  const frames = useMemo(() => isCustomImage ? Array.from({ length: FRAME_COUNT }, (_, index) => transformGrid(baseGrid, index, motion)) : Array.from({ length: FRAME_COUNT }, (_, index) => makeAnimalFrame(selectedAnimal, index)), [baseGrid, isCustomImage, motion, selectedAnimal]);
+  const frames = useMemo(() => isBuiltIn ? Array.from({ length: FRAME_COUNT }, (_, index) => makeAnimalFrame(selectedAnimal as BuiltInAnimalId, index)) : Array.from({ length: FRAME_COUNT }, (_, index) => transformGrid(baseGrid, index, motion)), [baseGrid, isBuiltIn, motion, selectedAnimal]);
   const currentGrid = frames[frameIndex] ?? frames[0];
   framesRef.current = frames;
   speedRef.current = speed;
 
-  useEffect(() => () => { if (timerRef.current) window.clearTimeout(timerRef.current); sdkRef.current?.disconnect(); }, []);
+  useEffect(() => () => { if (timerRef.current) window.clearTimeout(timerRef.current); window.speechSynthesis?.cancel(); sdkRef.current?.disconnect(); }, []);
 
   const writeToDevice = useCallback((grid: Grid) => {
     if (!sdkRef.current || !deviceRef.current) return;
@@ -301,6 +331,33 @@ export default function Home() {
     setLog(deviceRef.current ? "닷패드에 동물의 움직임을 보내고 있어요." : "화면에서 움직임을 보고 있어요. 닷패드를 연결하면 촉각으로도 느낄 수 있어요.");
     runNextFrame(frameIndex);
   }, [frameIndex, frames.length, runNextFrame]);
+
+  const speakDescription = () => {
+    if (!("speechSynthesis" in window)) { setLog("이 브라우저에서는 음성 안내를 지원하지 않아요."); return; }
+    window.speechSynthesis.cancel();
+    const speech = new SpeechSynthesisUtterance(activeAnimal.voice);
+    speech.lang = "ko-KR";
+    speech.rate = 0.86;
+    speech.pitch = 1.12;
+    speech.onstart = () => setIsSpeaking(true);
+    speech.onend = () => setIsSpeaking(false);
+    speech.onerror = () => { setIsSpeaking(false); setLog("음성 안내를 재생하지 못했어요. 다시 눌러 보세요."); };
+    window.speechSynthesis.speak(speech);
+    setLog(`${activeAnimal.name}의 움직임을 소리로 안내하고 있어요.`);
+  };
+
+  const answerQuiz = (choice: number) => {
+    if (quizResult === "correct") return;
+    setQuizChoice(choice);
+    if (choice === activeAnimal.quizAnswer) {
+      setQuizResult("correct");
+      setQuizScore((score) => score + 1);
+      setLog(`정답이에요! ${activeAnimal.name}는 ${activeAnimal.action}.`);
+      return;
+    }
+    setQuizResult("wrong");
+    setLog("다시 생각해 볼까요? 움직임을 보고 음성 안내도 들어보세요.");
+  };
 
   const setupSdk = useCallback(() => {
     if (sdkRef.current) return sdkRef.current;
@@ -357,10 +414,13 @@ export default function Home() {
     stopPlayback(`${animals.find((item) => item.id === animal)?.name ?? "동물"}의 움직임을 준비했어요.`);
     const model = animals.find((item) => item.id === animal) ?? animals[0];
     setSelectedAnimal(animal);
-    setBaseGrid(makeAnimalFrame(animal, 0));
+    setFrameIndex(0);
+    setQuizChoice(null);
+    setQuizResult("ready");
+    if (!model.builtIn) { void loadAutoTactileSource(model); return; }
+    setBaseGrid(makeAnimalFrame(animal as BuiltInAnimalId, 0));
     setSourceMode("builtIn");
     setSourceName(`${model.name} · ${model.action}`);
-    setFrameIndex(0);
   };
 
   const loadFile = (file?: File) => {
@@ -372,8 +432,8 @@ export default function Home() {
     image.src = objectUrl;
   };
 
-  const loadAutoTactileSource = async () => {
-    const iconId = autoTactileIcons[selectedAnimal];
+  const loadAutoTactileSource = async (animal = activeAnimal) => {
+    const iconId = animal.iconId;
     const [prefix, name] = iconId.split(/:(.+)/);
     setIsLoadingAutoSource(true);
     stopPlayback("Auto Tactile 소스에서 동물 아이콘을 불러오고 있어요.");
@@ -392,7 +452,7 @@ export default function Home() {
       setSourceMode("autoTactile");
       setSourceName(`Auto Tactile · ${iconId}`);
       setFrameIndex(0);
-      setLog(`${activeAnimal.name} 아이콘을 Auto Tactile 방식의 60 × 40 촉각 그래픽으로 불러왔어요.`);
+      setLog(`${animal.name} 아이콘을 Auto Tactile 방식의 60 × 40 촉각 그래픽으로 불러왔어요.`);
       URL.revokeObjectURL(objectUrl);
     } catch (error) {
       setLog(error instanceof Error ? error.message : "Auto Tactile 소스를 불러오지 못했어요.");
@@ -460,7 +520,7 @@ export default function Home() {
   };
 
   const handleFileInput = (event: ChangeEvent<HTMLInputElement>) => loadFile(event.target.files?.[0]);
-  const handleDrop = (event: DragEvent<HTMLLabelElement>) => { event.preventDefault(); loadFile(event.dataTransfer.files?.[0]); };
+  const handleDrop = (event: DragEvent<HTMLDivElement>) => { event.preventDefault(); loadFile(event.dataTransfer.files?.[0]); };
   const connectionLabel = connection === "connected" ? deviceName ?? "닷패드 연결됨" : connection === "connecting" ? "연결 중…" : connection === "error" ? "연결을 확인해 주세요" : "닷패드가 아직 없어요";
 
   return (
@@ -474,30 +534,35 @@ export default function Home() {
 
       <section className="workspace">
         <aside className="control-rail">
-          <section className="rail-section animal-section"><div className="section-heading"><span>01</span><h2>동물을 골라요</h2></div><div className="animal-grid">{animals.map((animal) => <button key={animal.id} className={`animal-card ${selectedAnimal === animal.id && !isCustomImage ? "selected" : ""}`} onClick={() => selectAnimal(animal.id)} aria-pressed={selectedAnimal === animal.id && !isCustomImage}><AnimalIcon type={animal.icon} /><span><b>{animal.name}</b><small>{animal.action}</small></span>{selectedAnimal === animal.id && !isCustomImage && <Check size={13} className="card-check" />}</button>)}</div></section>
-          <section className="rail-section mission-box"><div className="section-heading"><span>02</span><h2>찾아보기</h2></div><div className="mission-icon"><AnimalIcon type={activeAnimal.icon} size={26} /></div><p className="mission-title">{activeAnimal.name}가 {activeAnimal.action}</p><p className="mission-copy">{sourceMode === "autoTactile" ? "Auto Tactile 아이콘의 큰 모양이 어떻게 바뀌는지 찾아보세요." : sourceMode === "upload" ? "내 그림의 큰 모양이 어떻게 바뀌는지 찾아보세요." : activeAnimal.instruction}</p><div className="mission-prompt"><Volume2 size={15} />{sourceMode === "builtIn" ? activeAnimal.feature : "큰 모양을 찾아보세요"}</div></section>
-          <section className="rail-section source-section">
-            <div className="section-heading"><span>03</span><h2>그림 소스를 골라요</h2></div>
-            <div className="auto-source">
-              <div className="auto-source-icon"><Sparkles size={18} /></div>
-              <div><b>Auto Tactile 동물 아이콘</b><p>선택한 동물의 벡터 아이콘을 60 × 40 도트로 바꿔요.</p></div>
-              <button onClick={loadAutoTactileSource} disabled={isLoadingAutoSource}>{isLoadingAutoSource ? "불러오는 중…" : "불러오기"}</button>
+          <section className="rail-section catalog-section">
+            <div className="section-heading"><span>01</span><h2>동물 도감</h2><b className="catalog-count">{animals.length}</b></div>
+            <div className="category-tabs" role="tablist" aria-label="동물 카테고리">
+              {animalCategories.map((category) => <button key={category.id} className={selectedCategory === category.id ? "active" : ""} onClick={() => setSelectedCategory(category.id)} role="tab" aria-selected={selectedCategory === category.id}><span>{category.emoji}</span>{category.label}</button>)}
             </div>
-            <div className="source-divider"><span>또는</span></div>
-            <label className="upload-zone" onDragOver={(event) => event.preventDefault()} onDrop={handleDrop}>
-              <input ref={inputRef} type="file" accept="image/png,image/jpeg,image/webp,image/gif" onChange={handleFileInput} />
-              <div className="upload-icon"><ImageUp size={20} /></div><strong>동물 그림을 넣어 보세요</strong><small>PNG, JPG, WebP 또는 GIF</small>
-              <button type="button" className="browse-link" onClick={() => inputRef.current?.click()}><Upload size={13} />그림 고르기</button>
-            </label>
-            <div className="source-meta"><span className="source-dot" />{sourceName}</div>
-            <label className="control-label" htmlFor="motion">불러온 그림 움직임</label>
-            <select id="motion" value={motion} onChange={(event) => { setMotion(event.target.value as MotionType); setFrameIndex(0); }} disabled={!isCustomImage}>
-              <option value="shift">좌우로 이동</option><option value="scan">스캔하며 이동</option><option value="pulse">커졌다 작아지기</option>
-            </select>
-            <div className="slider-head"><label htmlFor="threshold">그림 진하기</label><b>{threshold}</b></div>
-            <input id="threshold" type="range" min="60" max="210" value={threshold} onChange={(event) => setThreshold(Number(event.target.value))} />
+            <div className="catalog-grid">{catalogAnimals.map((animal) => <button key={animal.id} className={`catalog-card ${selectedAnimal === animal.id ? "selected" : ""}`} onClick={() => selectAnimal(animal.id)} aria-pressed={selectedAnimal === animal.id}><span className="catalog-emoji">{animal.emoji}</span><span><b>{animal.name}</b><small>{animal.action}</small></span>{selectedAnimal === animal.id && <Check size={16} className="card-check" />}</button>)}</div>
           </section>
-          <section className="rail-section connection-section"><div className="section-heading"><span>04</span><h2>닷패드로 보내요</h2></div><button className="connection-button bluetooth" onClick={connectBluetooth} disabled={connection === "connecting" || connection === "connected"}><Bluetooth size={17} /><span><b>블루투스</b><small>Chrome에서 연결</small></span></button><button className="connection-button" onClick={connectUsb} disabled={connection === "connecting" || connection === "connected"}><Cable size={17} /><span><b>USB 케이블</b><small>유선으로 연결</small></span></button></section>
+          <section className="rail-section mission-box">
+            <div className="section-heading"><span>02</span><h2>듣고 찾아봐요</h2></div>
+            <div className="mission-hero"><span>{activeAnimal.emoji}</span><div><p className="mission-title">{activeAnimal.name}가 {activeAnimal.action}</p><p className="mission-copy">{sourceMode === "autoTactile" ? "Auto Tactile 아이콘의 큰 모양이 어떻게 바뀌는지 찾아보세요." : sourceMode === "upload" ? "내 그림의 큰 모양이 어떻게 바뀌는지 찾아보세요." : activeAnimal.instruction}</p></div></div>
+            <button className={`voice-button ${isSpeaking ? "speaking" : ""}`} onClick={speakDescription}><Volume2 size={22} /><span>{isSpeaking ? "설명하는 중이에요" : "동물 설명 듣기"}</span></button>
+            <div className="mission-prompt"><Sparkles size={15} />{sourceMode === "builtIn" ? activeAnimal.feature : "큰 모양을 찾아보세요"}</div>
+          </section>
+          <section className={`rail-section quiz-section ${quizResult}`}>
+            <div className="section-heading"><span>03</span><h2>움직임 퀴즈</h2><b className="score-chip">별 {quizScore}</b></div>
+            <p className="quiz-question">{activeAnimal.emoji} <b>{activeAnimal.name}</b>는 어떻게 움직일까요?</p>
+            <div className="quiz-options">{quizOptions.map((option, index) => <button key={option} className={`${quizChoice === index ? "chosen" : ""} ${quizResult === "correct" && index === activeAnimal.quizAnswer ? "answer" : ""}`} onClick={() => answerQuiz(index)} disabled={quizResult === "correct"}><span>{index + 1}</span>{option}</button>)}</div>
+            <p className="quiz-feedback" aria-live="polite">{quizResult === "correct" ? "참 잘했어요! 반짝반짝 별을 받았어요." : quizResult === "wrong" ? "조금만 더 생각해 봐요. 설명 듣기를 눌러도 좋아요." : "정답을 눌러 보세요."}</p>
+          </section>
+          <section className="rail-section source-section">
+            <div className="section-heading"><span>04</span><h2>그림 바꾸기</h2></div>
+            <div className="auto-source"><div className="auto-source-icon"><Sparkles size={20} /></div><div><b>Auto Tactile 아이콘</b><p>선택한 동물을 60 × 40 도트로 바꿔요.</p></div><button onClick={() => void loadAutoTactileSource()} disabled={isLoadingAutoSource}>{isLoadingAutoSource ? "준비 중" : "다시 만들기"}</button></div>
+            <div className="source-divider"><span>또는</span></div>
+            <div className="upload-zone" onDragOver={(event) => event.preventDefault()} onDrop={handleDrop}><input className="file-input" ref={inputRef} type="file" accept="image/png,image/jpeg,image/webp,image/gif" onChange={handleFileInput} /><div className="upload-icon"><ImageUp size={21} /></div><strong>내 동물 그림</strong><small>PNG, JPG, WebP 또는 GIF</small><button type="button" className="browse-link" onClick={() => inputRef.current?.click()}><Upload size={15} />그림 고르기</button></div>
+            <div className="source-meta"><span className="source-dot" />{sourceName}</div>
+            <label className="control-label" htmlFor="motion">그림 움직임</label>
+            <select id="motion" value={motion} onChange={(event) => { setMotion(event.target.value as MotionType); setFrameIndex(0); }} disabled={!isCustomImage}><option value="shift">좌우로 이동</option><option value="scan">스캔하며 이동</option><option value="pulse">커졌다 작아지기</option></select>
+          </section>
+          <section className="rail-section connection-section"><div className="section-heading"><span>05</span><h2>닷패드로 보내요</h2></div><button className="connection-button bluetooth" onClick={connectBluetooth} disabled={connection === "connecting" || connection === "connected"}><Bluetooth size={20} /><span><b>블루투스 연결</b><small>Chrome에서 연결</small></span></button><button className="connection-button" onClick={connectUsb} disabled={connection === "connecting" || connection === "connected"}><Cable size={20} /><span><b>USB 케이블</b><small>유선으로 연결</small></span></button></section>
         </aside>
 
         <section className="stage">
