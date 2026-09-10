@@ -83,3 +83,21 @@
 @media (max-width:600px) { .category-tabs { grid-template-columns:repeat(5,minmax(54px,1fr)); overflow-x:auto; padding-bottom:2px; } .category-tabs button { min-width:54px; } .catalog-grid { grid-template-columns:repeat(2,minmax(0,1fr)); max-height:350px; } .catalog-card { min-height:72px; } .catalog-card small { max-width:120px; } .transport-main { width:100%; flex-wrap:wrap; } .play-button { flex:1; justify-content:center; } .video-button { flex:1; justify-content:center; } }
 
 .workspace .stage { justify-content:flex-start; }
+
+/* Generated-motion replacement: real pose changes instead of shifted icon graphics */
+.catalog-note { display:flex; align-items:center; gap:6px; margin:-5px 0 10px; color:var(--electric); font:600 10px "Gowun Dodum",sans-serif; }
+.catalog-note svg { color:var(--signal); }
+.catalog-card.pending { opacity:.58; border-style:dashed; }
+.catalog-card.pending:hover { opacity:.82; }
+.pending-dot { position:absolute; top:10px; right:10px; width:7px; height:7px; border-radius:50%; background:#78877d; box-shadow:0 0 0 3px rgba(120,135,125,.12); }
+.pipeline-section { padding:16px; border:1px solid rgba(115,227,255,.21); border-radius:10px; background:linear-gradient(145deg,rgba(115,227,255,.07),rgba(199,183,255,.04)); }
+.pipeline-section .section-heading { margin-bottom:12px; }
+.motion-pipeline { display:flex; align-items:center; justify-content:space-between; gap:4px; }
+.motion-pipeline > div { min-width:0; display:grid; gap:3px; }
+.motion-pipeline span { color:var(--signal); font:600 8px "DM Mono",monospace; }
+.motion-pipeline b { color:#effff6; font:700 10px "Gowun Dodum",sans-serif; white-space:nowrap; }
+.motion-pipeline small { color:#9aada0; font:400 8px/1.35 "Gowun Dodum",sans-serif; }
+.motion-pipeline svg { flex:0 0 auto; color:var(--signal); opacity:.7; }
+.pipeline-copy { margin:12px 0 0; color:#bdcbbc; font:400 10px/1.55 "Gowun Dodum",sans-serif; }
+.preview-footer span:last-child { color:var(--electric); }
+@media (max-width:600px) { .motion-pipeline { gap:3px; } .motion-pipeline b { font-size:9px; } .motion-pipeline small { font-size:7px; } .motion-pipeline svg { width:13px; } }
