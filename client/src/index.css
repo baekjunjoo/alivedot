@@ -116,3 +116,34 @@
 .slow-listen-button:hover { filter:brightness(1.08); }
 .slow-frame-button:active,.slow-listen-button:active { transform:scale(.97); }
 @media (max-width:600px) { .slow-explore { align-items:stretch; flex-direction:column; gap:10px; margin-top:13px; padding:12px; } .slow-explore-controls { width:100%; } .slow-frame-button { flex:0 0 auto; padding:0 9px; } .slow-listen-button { flex:1; } }
+
+/* Motion-recall quiz: unlocked only after all six tactile poses are explored. */
+.slow-explore { flex-wrap:wrap; }
+.review-quiz { flex:1 0 100%; display:grid; gap:10px; padding:11px; border:1px solid rgba(255,226,132,.2); border-radius:9px; background:rgba(7,16,25,.48); }
+.review-quiz.locked { opacity:.7; }
+.review-quiz.unlocked { border-color:rgba(255,226,132,.5); background:linear-gradient(120deg,rgba(255,202,79,.1),rgba(115,227,255,.055)); }
+.review-heading { display:flex; align-items:center; gap:8px; }
+.review-heading > div { min-width:0; flex:1; }
+.review-number { flex:0 0 auto; display:grid; place-items:center; width:34px; height:28px; border-radius:7px; color:#251e07; background:#ffe284; font:800 9px "DM Mono",monospace; }
+.review-heading p { margin:0; color:#fff9dc; font:700 11px "Gowun Dodum",sans-serif; }
+.review-heading small { display:block; margin-top:2px; color:#b9c5b5; font:400 9px/1.35 "Gowun Dodum",sans-serif; }
+.review-heading b { flex:0 0 auto; padding:4px 7px; border:1px solid rgba(255,226,132,.3); border-radius:999px; color:#ffe284; font:700 8px "DM Mono",monospace; }
+.review-options { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; }
+.review-options button { min-height:42px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; padding:5px; border:1px solid rgba(255,255,255,.12); border-radius:8px; color:#e7f0e9; background:rgba(8,18,28,.72); font:700 10px "Gowun Dodum",sans-serif; transition:transform .16s cubic-bezier(.23,1,.32,1),border-color .16s,background .16s; }
+.review-options button span { font-size:17px; line-height:1; }
+.review-options button:hover { transform:translateY(-1px); border-color:rgba(255,226,132,.7); background:rgba(255,226,132,.1); }
+.review-options button:active { transform:scale(.97); }
+.review-options button.chosen { border-color:#ffe284; }
+.review-options button.answer { border-color:var(--electric); color:#dffff0; background:rgba(119,243,189,.18); }
+.review-options button:disabled { cursor:default; }
+.review-feedback { min-height:14px; margin:0; color:#d7d2bb; font:500 9px/1.4 "Gowun Dodum",sans-serif; }
+.review-quiz.correct .review-feedback { color:var(--electric); }
+.review-quiz.wrong .review-feedback { color:#ffd28c; }
+.review-lock { display:flex; align-items:center; gap:6px; color:#a8bcb1; font:500 9px/1.4 "Gowun Dodum",sans-serif; }
+.review-lock svg { flex:0 0 auto; color:#ffe284; }
+@media (max-width:600px) { .review-quiz { padding:10px; } .review-options { grid-template-columns:repeat(2,1fr); } .review-options button { min-height:46px; flex-direction:row; gap:6px; } }
+
+/* Grid keeps the review card beneath the controls at every viewport width. */
+.slow-explore { display:grid; grid-template-columns:minmax(0,1fr) auto; }
+.review-quiz { grid-column:1 / -1; box-sizing:border-box; width:100%; min-width:0; }
+@media (max-width:600px) { .slow-explore { display:grid; grid-template-columns:minmax(0,1fr); } .slow-explore-controls { min-width:0; } }

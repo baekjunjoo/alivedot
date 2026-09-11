@@ -43,3 +43,13 @@ The catalog now contains six tactile pose frames for all seventeen animals. The 
 | Monkey selection | Selecting the newly generated monkey sequence loaded its hop-pose frame 1 without a pending-state message |
 
 A physical DotPad was not available in the preview environment, so Bluetooth/USB pin output requires final hardware verification. The browser flow calls the same existing DotPad SDK graphic-output routine for automatic playback and each manual slow-exploration step.
+
+
+## Frame-specific narration and motion-review quiz validation — 2026-09-11
+
+- Added an explicit Korean tactile narration for every six-frame sequence across all 17 animals. The directions name concrete changing forms—such as a cat's left and right forepaws, a turtle's alternating flippers, a fish's left/right tail curve, or an elephant's forward foot and swinging trunk—rather than repeating a generic frame prompt.
+- Slow exploration now records each uniquely visited frame. The motion-recall card remains locked at `0 / 6` and unlocks only after the learner has manually explored all six poses.
+- The unlocked review UI presents four animal-name choices selected from the active animal's category first. It supports a retry after an incorrect answer and locks into a positive completion state after the correct answer.
+- `pnpm check` and `pnpm build` passed after the update.
+- Browser interaction test: manually advanced the fish sequence from frame 1 to frame 6; the review card changed from locked `0 / 6` through `5 / 6` to unlocked with fish, dolphin, whale, and octopus choices. Both wrong-answer hint and correct-answer completion feedback were verified.
+- Full-page 390×844 visual review verified that the review card is directly below slow-exploration controls without horizontal overflow and remains legible before the catalog.
