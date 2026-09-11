@@ -65,3 +65,10 @@ The interface was reworked around a clean research-landing visual system: an off
 | Desktop visual review | At 1440×960, the blue hero, left catalog rail, prominent tactile stage, and white research-style control surfaces render without clipping |
 | Mobile visual review | At 390×844, the page follows a clear sequence of hero, tactile animation, transport controls, slow exploration, catalog, learning prompt, quiz, pipeline, and connection controls |
 | Catalog interaction | The Water filter reduced the catalog to fish, dolphin, whale, octopus, and turtle after the visual redesign |
+
+
+## GitHub Pages root-route correction and AliveDot intro — 2026-09-11
+
+The initial public-page failure was traced to client-side routing rather than an absent Pages artifact. GitHub Pages correctly serves the application from the `/alivedot/` project subpath, while the former Wouter configuration matched only `/` and therefore displayed the app’s 404 component. The router now uses Vite’s deployment base path, so `/alivedot/` resolves to the home screen in production while local development continues to use `/`.
+
+The header is now simply **AliveDot**, and the intro states the product purpose directly: AliveDot converts animal movement into tactile frames that can be explored slowly on DotPad. The previous “동물놀이터” brand label has been removed from the product UI, document title, and project heading.

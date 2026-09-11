@@ -575,11 +575,11 @@ export default function Home() {
   return (
     <main className="app-shell kid-mode">
       <header className="topbar">
-        <div className="brand-lockup"><div className="brand-mark" aria-hidden="true"><span /><span /><span /><span /></div><div><p className="eyebrow">DOT PAD · GENERATED MOTION</p><h1>닷 <em>동물놀이터</em></h1></div></div>
+        <div className="brand-lockup"><div className="brand-mark" aria-hidden="true"><span /><span /><span /><span /></div><div><p className="eyebrow">TACTILE MOTION</p><h1>AliveDot</h1></div></div>
         <div className="topbar-right"><div className={`connection-pill ${connection}`}><span className="connection-led" />{connectionLabel}</div>{connection === "connected" ? <button className="compact-button disconnect" onClick={disconnect}><X size={15} />연결 끊기</button> : <button className="compact-button" onClick={connectBluetooth} disabled={connection === "connecting"}><Bluetooth size={15} />닷패드 연결</button>}</div>
       </header>
 
-      <section className="intro-strip"><div><p className="eyebrow">HIGGSFIELD 동작 영상 → 촉각 도트</p><h2>동물의 <em>진짜 동작 순서</em>를<br />손끝으로 찾아봐요.</h2></div><div className="how-to"><span>1</span><p>동작을 고르고</p><ChevronRight size={16} /><span>2</span><p>프레임을 재생한 뒤</p><ChevronRight size={16} /><span>3</span><p>닷패드에서 느껴요</p></div></section>
+      <section className="intro-strip"><div><p className="eyebrow">ALIVEDOT · TACTILE LEARNING</p><h2>움직임을 <em>손끝으로</em><br />이해하는 경험.</h2><p className="intro-copy">AliveDot은 동물의 움직임을 촉각 프레임으로 바꿔, DotPad에서 천천히 탐색할 수 있도록 돕습니다.</p></div><div className="how-to"><span>1</span><p>동작을 고르고</p><ChevronRight size={16} /><span>2</span><p>프레임을 재생한 뒤</p><ChevronRight size={16} /><span>3</span><p>닷패드에서 느껴요</p></div></section>
 
       <section className="workspace">
         <aside className="control-rail">
