@@ -176,3 +176,53 @@ button:disabled { cursor: not-allowed; opacity: .45; }
 @media (max-width: 1030px) { .workspace { grid-template-columns: 310px minmax(0,1fr); gap: 30px; padding: 35px 25px 48px; }.intro-strip { padding: 44px 50px; }.intro-strip h2 { font-size: 43px; }.how-to { max-width: 345px; }.how-to p { font-size: 9px; }.preview-shell { min-height: 510px; } }
 @media (max-width: 820px) { .intro-strip { min-height: 240px; align-items: flex-start; flex-direction: column; }.intro-strip h2 { max-width: 600px; }.how-to { max-width: none; }.workspace { grid-template-columns: 1fr; }.stage { order: -1; }.control-rail { display: grid; grid-template-columns: 1fr 1fr; align-items: start; }.catalog-section, .mission-box { grid-column: span 2; }.pipeline-section, .connection-section { height: 100%; }.preview-shell { min-height: min(76vw, 590px); }.catalog-grid { max-height: 330px; } }
 @media (max-width: 600px) { .topbar { min-height: 66px; padding: 12px 18px; }.brand-mark { width: 30px; height: 30px; }.brand-lockup h1 { font-size: 16px; }.brand-lockup .eyebrow { display: none; }.topbar-right .connection-pill { display: none; }.topbar-right .compact-button { min-height: 37px; padding: 0 11px; font-size: 0; }.topbar-right .compact-button svg { margin: 0; }.intro-strip { min-height: 295px; padding: 37px 22px; }.intro-strip::before { right: -230px; bottom: -100px; }.intro-strip h2 { font-size: 37px; }.how-to { width: 100%; gap: 7px; padding: 12px; }.how-to p { font-size: 9px; }.how-to span { width: 23px; height: 23px; font-size: 9px; }.workspace { padding: 30px 18px 44px; gap: 24px; }.stage-bar { align-items: flex-start; flex-direction: column; gap: 10px; }.stage-bar h2 { font-size: 37px; }.matrix-stat { font-size: 13px; }.preview-shell { min-height: 74vw; border-radius: 17px; }.dot-matrix { width: 86%; }.preview-footer { right: 15px; bottom: 12px; left: 15px; font-size: 7px; }.preview-footer span:last-child { display: none; }.transport-panel { align-items: flex-start; flex-direction: column; gap: 13px; }.transport-main { width: 100%; flex-wrap: wrap; }.play-button { flex: 1; justify-content: center; }.video-button { flex: 1; justify-content: center; }.speed-control { width: 100%; justify-content: flex-start; }.speed-control input { flex: 1; width: auto; }.control-rail { grid-template-columns: 1fr; gap: 13px; }.catalog-section, .mission-box { grid-column: auto; }.rail-section { padding: 17px; border-radius: 15px; }.category-tabs { grid-template-columns: repeat(5, minmax(52px, 1fr)); overflow-x: auto; }.category-tabs button { min-width: 52px; }.catalog-grid { max-height: 350px; }.catalog-card { min-height: 68px; }.connection-section { min-height: auto; }.slow-explore { grid-template-columns: minmax(0, 1fr); padding: 13px; }.slow-explore-controls { min-width: 0; width: 100%; }.slow-frame-button { padding: 0 9px; }.slow-listen-button { flex: 1; }.review-options { grid-template-columns: repeat(2,1fr); }.review-options button { min-height: 46px; flex-direction: row; gap: 6px; }.status-deck { min-height: 55px; padding: 0 18px; }.sdk-badge { display: none; }.status-message p { font-size: 9px; } }
+
+
+/* Accessibility pass: keep labels and instructional text readable on tablets and classroom displays. */
+:root { --ink-soft: #46536a; }
+.eyebrow { font-size: 11px; }
+.connection-pill { font-size: 11px; }
+.compact-button { font-size: 13px; }
+.intro-copy { font-size: 16px; line-height: 1.7; }
+.how-to p { font-size: 13px; }
+.section-heading h2 { font-size: 15px; }
+.catalog-count, .score-chip { font-size: 11px; }
+.catalog-note { font-size: 12px; }
+.category-tabs button { font-size: 10px; }
+.catalog-card b { font-size: 13px; }
+.catalog-card small { max-width: 112px; font-size: 10px; }
+.mission-title { font-size: 15px; }
+.mission-copy { font-size: 12px; line-height: 1.6; }
+.voice-button { font-size: 13px; }
+.mission-prompt { font-size: 11px; }
+.quiz-question { font-size: 13px; }
+.quiz-options button { font-size: 11px; }
+.quiz-feedback { font-size: 11px; }
+.motion-pipeline span { font-size: 10px; }
+.motion-pipeline b { font-size: 11px; }
+.motion-pipeline small, .pipeline-copy { font-size: 10px; }
+.connection-button b { font-size: 12px; }
+.connection-button small { font-size: 10px; }
+.matrix-stat small { font-size: 9px; }
+.preview-footer { font-size: 10px; }
+.play-button { font-size: 13px; }
+.frame-button, .video-button { font-size: 12px; }
+.speed-control label, .speed-control b { font-size: 12px; }
+.slow-explore-copy p { font-size: 14px; }
+.slow-explore-copy small { font-size: 11px; line-height: 1.55; }
+.slow-frame-button, .slow-listen-button { font-size: 12px; }
+.review-number, .review-heading b { font-size: 10px; }
+.review-heading p { font-size: 12px; }
+.review-heading small, .review-feedback, .review-lock { font-size: 10px; }
+.review-options button { font-size: 11px; }
+.status-message p, .sdk-badge { font-size: 10px; }
+
+@media (max-width: 600px) {
+  .intro-copy { margin-top: 14px; font-size: 14px; }
+  .how-to p { font-size: 10px; }
+  .category-tabs button { font-size: 9px; }
+  .catalog-card small { font-size: 9px; }
+  .motion-pipeline small, .pipeline-copy { font-size: 9px; }
+  .preview-footer { font-size: 8px; }
+  .status-message p { font-size: 10px; }
+}

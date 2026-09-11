@@ -22,6 +22,7 @@ import {
   DisplayMode,
   DotPadScanner,
   DotPadSDK,
+  KeyCodes,
   type DotDevice,
 } from "@/sdk/DotPadSDK-3.0.2";
 import { generatedMotionHex } from "@/generatedMotionFrames";
@@ -248,7 +249,7 @@ export default function Home() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isSlowExploring, setIsSlowExploring] = useState(false);
   const [exploredFrames, setExploredFrames] = useState<number[]>([]);
-  const [speed, setSpeed] = useState(2.5);
+  const [speed, setSpeed] = useState(0.5);
   const [isExportingVideo, setIsExportingVideo] = useState(false);
   const [connection, setConnection] = useState<ConnectionState>("idle");
   const [deviceName, setDeviceName] = useState<string | null>(null);
@@ -265,6 +266,9 @@ export default function Home() {
   const playRef = useRef(false);
   const framesRef = useRef<Grid[]>([]);
   const speedRef = useRef(speed);
+  const frameIndexRef = useRef(0);
+  const slowExploringRef = useRef(false);
+  const exploreFrameRef = useRef<(nextIndex: number) => void>(() => {});
 
   const activeAnimal = animals.find((animal) => animal.id === selectedAnimal) ?? animals[0];
   const catalogAnimals = selectedCategory === "all" ? animals : animals.filter((animal) => animal.category === selectedCategory);
@@ -282,6 +286,8 @@ export default function Home() {
   }, [activeAnimal]);
   framesRef.current = frames;
   speedRef.current = speed;
+  frameIndexRef.current = frameIndex;
+  slowExploringRef.current = isSlowExploring;
 
   useEffect(() => () => {
     if (timerRef.current) window.clearTimeout(timerRef.current);
@@ -388,6 +394,8 @@ export default function Home() {
     speakFrameGuide(nextIndex);
   }, [speakFrameGuide, stopPlayback, writeToDevice]);
 
+  exploreFrameRef.current = exploreFrame;
+
   const answerQuiz = (choice: number) => {
     if (quizResult === "correct") return;
     setQuizChoice(choice);
@@ -431,7 +439,18 @@ export default function Home() {
       }
       if (code === DataCodes.ResponseDisplayLineComplete) setLog("프레임이 전달됐어요. 다음 동작을 준비하고 있어요.");
       if (message && code === DataCodes.ConnectedFail) setLog(message);
-    }, null);
+    }, (_device, keyCode) => {
+      if (keyCode !== KeyCodes.PanningLeft && keyCode !== KeyCodes.PanningRight) return;
+      if (!slowExploringRef.current) {
+        setLog("느린 탐색을 시작한 뒤 닷패드의 패닝 키로 이전·다음 프레임을 넘겨 보세요.");
+        return;
+      }
+      const activeFrames = framesRef.current;
+      if (!activeFrames.length) return;
+      const direction = keyCode === KeyCodes.PanningLeft ? -1 : 1;
+      const nextIndex = (frameIndexRef.current + direction + activeFrames.length) % activeFrames.length;
+      exploreFrameRef.current(nextIndex);
+    });
     sdkRef.current = sdk;
     return sdk;
   }, [stopPlayback]);
@@ -623,7 +642,7 @@ export default function Home() {
           <div className="preview-shell"><div className="preview-corner tl" /><div className="preview-corner tr" /><div className="preview-corner bl" /><div className="preview-corner br" /><div className="scanline" /><DotMatrix grid={currentGrid} /><div className="preview-footer"><span>실제 동작 {String(frameIndex + 1).padStart(2, "0")} / {String(FRAME_COUNT).padStart(2, "0")}</span><span>Higgsfield 영상 프레임</span></div></div>
           <div className="transport-panel"><div className="transport-main"><button className={`play-button ${isPlaying ? "playing" : ""}`} onClick={() => (isPlaying ? stopPlayback() : startPlayback())}>{isPlaying ? <Pause fill="currentColor" size={18} /> : <Play fill="currentColor" size={18} />}{isPlaying ? "잠시 멈추기" : "동작 재생"}</button><button className="frame-button" onClick={() => { stopPlayback("다음 실제 동작을 보여 줬어요."); const next = (frameIndex + 1) % frames.length; setFrameIndex(next); writeToDevice(frames[next]); }} title="다음 동작 보내기"><Send size={16} /></button><button className="video-button" onClick={exportVideo} disabled={isExportingVideo} title="WebM 영상 저장"><Video size={16} />{isExportingVideo ? "만드는 중" : "영상 저장"}</button></div><div className="speed-control"><Gauge size={15} /><label htmlFor="speed">속도</label><input id="speed" type="range" min="0.5" max="7" step="0.5" value={speed} onChange={(event) => setSpeed(Number(event.target.value))} /><b>{speed.toFixed(1)} fps</b></div></div>
           <div className={`slow-explore ${isSlowExploring ? "active" : ""}`}>
-            <div className="slow-explore-copy"><span className="slow-explore-icon"><Volume2 size={18} /></span><div><p>느린 탐색 모드</p><small>프레임을 하나씩 넘기고 설명을 들으며 손끝으로 확인해요.</small></div></div>
+            <div className="slow-explore-copy"><span className="slow-explore-icon"><Volume2 size={18} /></span><div><p>느린 탐색 모드</p><small>프레임을 하나씩 넘기고 설명을 들으며 손끝으로 확인해요. 닷패드의 패닝 키로 이전·다음 프레임을 넘길 수 있어요.</small></div></div>
             <div className="slow-explore-controls"><button className="slow-frame-button" onClick={() => exploreFrame((frameIndex + frames.length - 1) % frames.length)} aria-label="이전 프레임 느린 탐색"><ChevronLeft size={20} />이전</button><button className="slow-listen-button" onClick={() => exploreFrame(frameIndex)}><Volume2 size={18} />{isSlowExploring ? `프레임 ${frameIndex + 1} 다시 듣기` : "느린 탐색 시작"}</button><button className="slow-frame-button" onClick={() => exploreFrame((frameIndex + 1) % frames.length)} aria-label="다음 프레임 느린 탐색">다음<ChevronRight size={20} /></button></div>
             <div className={`review-quiz ${explorationComplete ? "unlocked" : "locked"} ${reviewResult}`} aria-live="polite">
               <div className="review-heading"><span className="review-number">복습</span><div><p>방금 느낀 동물은 누구일까요?</p><small>{explorationComplete ? "움직임의 특징을 떠올리고 동물을 골라 보세요." : `느린 탐색 ${exploredFrames.length} / ${FRAME_COUNT} 프레임을 느끼면 열려요.`}</small></div><b>{explorationComplete ? "열림" : `${exploredFrames.length} / ${FRAME_COUNT}`}</b></div>

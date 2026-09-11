@@ -72,3 +72,10 @@ The interface was reworked around a clean research-landing visual system: an off
 The initial public-page failure was traced to client-side routing rather than an absent Pages artifact. GitHub Pages correctly serves the application from the `/alivedot/` project subpath, while the former Wouter configuration matched only `/` and therefore displayed the app’s 404 component. The router now uses Vite’s deployment base path, so `/alivedot/` resolves to the home screen in production while local development continues to use `/`.
 
 The header is now simply **AliveDot**, and the intro states the product purpose directly: AliveDot converts animal movement into tactile frames that can be explored slowly on DotPad. The previous “동물놀이터” brand label has been removed from the product UI, document title, and project heading.
+
+
+## Slow navigation and readability pass — 2026-09-11
+
+The default automatic playback setting is now **0.5 fps**, allowing a full two seconds for each tactile frame. The DotPad SDK’s `keyCallBack` is registered for `PanningLeft` and `PanningRight`; while slow exploration is active, left moves to the preceding frame and right advances to the following frame, sends that frame to the connected DotPad, and speaks the matching frame-specific narration. When slow exploration has not started, panning keys provide a concise instruction rather than altering the automatic playback state.
+
+A readability pass enlarged instructional labels, catalog text, quiz text, buttons, control labels, status text, and the purpose copy, while increasing the muted-text contrast. The desktop browser check confirmed that the UI displays **0.5 fps** by default and surfaces the panning-key instruction in the slow-exploration panel. TypeScript validation and the production build completed successfully.
