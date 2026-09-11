@@ -86,3 +86,10 @@ A readability pass enlarged instructional labels, catalog text, quiz text, butto
 The visual mismatch was caused by sending the generated source frame bytes directly to the DotPad SDK. Those sources are stored as 64×40 row-packed data: 60 visible dots plus four end-of-row padding dots, which produces a 640-byte hexadecimal stream. The on-screen simulator correctly reads that row-packed source, but DotPad `GraphicMode` accepts 30×10 two-by-four tactile cells, or 600 bytes, with left-column bits 0–3 and right-column bits 4–7.
 
 The simulator remains tied to the source-frame layout. Before every hardware transmission, the same 60×40 visible grid is now converted to the DotPad graphic-cell layout. A deterministic round-trip validation passed for all **102** motion frames: source row data → simulator grid → DotPad cells → device grid produced identical 60×40 tactile dots. TypeScript validation and the production build also passed.
+
+
+## Tactile animal recognition enhancement — 2026-09-11
+
+Eight visually ambiguous motion sets were revised directly in their existing 60×40 tactile frames; no additional generated media was used. **Elephant** now has a stronger long trunk, broad ear, and tusks; **monkey** has a separate curled tail; **lion** has a raised mane ring; **owl** has two recessed eyes and a pointed beak; **bee** has three abdomen bands and antennae; **butterfly** has a thin central body, separated wing edges, and antennae; **octopus** has eight distinct lower tentacles; and **turtle** has a segmented shell and extended head.
+
+All 17 catalog entries retain six 60×40 frames, for 102 frames in total. The local browser check confirmed the updated octopus silhouette and its focused prompt, “아래로 갈라진 여덟 다리를 세어보세요.” TypeScript validation and the production build passed.
