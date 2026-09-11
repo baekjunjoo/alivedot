@@ -93,3 +93,10 @@ The simulator remains tied to the source-frame layout. Before every hardware tra
 Eight visually ambiguous motion sets were revised directly in their existing 60×40 tactile frames; no additional generated media was used. **Elephant** now has a stronger long trunk, broad ear, and tusks; **monkey** has a separate curled tail; **lion** has a raised mane ring; **owl** has two recessed eyes and a pointed beak; **bee** has three abdomen bands and antennae; **butterfly** has a thin central body, separated wing edges, and antennae; **octopus** has eight distinct lower tentacles; and **turtle** has a segmented shell and extended head.
 
 All 17 catalog entries retain six 60×40 frames, for 102 frames in total. The local browser check confirmed the updated octopus silhouette and its focused prompt, “아래로 갈라진 여덟 다리를 세어보세요.” TypeScript validation and the production build passed.
+
+
+## Sparse tactile silhouette redesign — 2026-09-11
+
+The eight ambiguous animals were rebuilt as native 60×40 tactile diagrams rather than downsampled AI silhouettes. Each drawing now uses a low-density, three-dot-thick outline and deliberately preserved empty space. The distinguishing structures are part of the primary outline: elephant trunk and ear, monkey’s curled tail, lion’s mane ring, owl’s paired eyes and beak, bee’s abdomen bands, butterfly’s separated wing pairs, octopus’s eight tentacles, and turtle’s segmented shell.
+
+The sequences retain six distinct poses each and were verified frame by frame. Density ranges from 263 to 562 raised dots per 2,400-dot frame, leaving substantially more negative space than the prior filled forms. Every frame was also round-trip checked against the DotPad 30×10 graphic-cell encoding; the decoded DotPad grid exactly matches the simulator’s 60×40 grid. TypeScript validation and the production build passed.
