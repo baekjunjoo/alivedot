@@ -79,3 +79,10 @@ The header is now simply **AliveDot**, and the intro states the product purpose 
 The default automatic playback setting is now **0.5 fps**, allowing a full two seconds for each tactile frame. The DotPad SDK’s `keyCallBack` is registered for `PanningLeft` and `PanningRight`; while slow exploration is active, left moves to the preceding frame and right advances to the following frame, sends that frame to the connected DotPad, and speaks the matching frame-specific narration. When slow exploration has not started, panning keys provide a concise instruction rather than altering the automatic playback state.
 
 A readability pass enlarged instructional labels, catalog text, quiz text, buttons, control labels, status text, and the purpose copy, while increasing the muted-text contrast. The desktop browser check confirmed that the UI displays **0.5 fps** by default and surfaces the panning-key instruction in the slow-exploration panel. TypeScript validation and the production build completed successfully.
+
+
+## Simulator-to-DotPad graphic alignment correction — 2026-09-11
+
+The visual mismatch was caused by sending the generated source frame bytes directly to the DotPad SDK. Those sources are stored as 64×40 row-packed data: 60 visible dots plus four end-of-row padding dots, which produces a 640-byte hexadecimal stream. The on-screen simulator correctly reads that row-packed source, but DotPad `GraphicMode` accepts 30×10 two-by-four tactile cells, or 600 bytes, with left-column bits 0–3 and right-column bits 4–7.
+
+The simulator remains tied to the source-frame layout. Before every hardware transmission, the same 60×40 visible grid is now converted to the DotPad graphic-cell layout. A deterministic round-trip validation passed for all **102** motion frames: source row data → simulator grid → DotPad cells → device grid produced identical 60×40 tactile dots. TypeScript validation and the production build also passed.
