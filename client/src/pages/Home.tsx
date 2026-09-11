@@ -628,13 +628,7 @@ export default function Home() {
             <p className="quiz-feedback" aria-live="polite">{quizResult === "correct" ? "참 잘했어요! 반짝반짝 별을 받았어요." : quizResult === "wrong" ? "조금만 더 생각해 봐요. 실제 프레임을 다시 봐도 좋아요." : "정답을 눌러 보세요."}</p>
           </section>
 
-          <section className="rail-section pipeline-section">
-            <div className="section-heading"><span>04</span><h2>어떻게 만들었을까요?</h2></div>
-            <div className="motion-pipeline"><div><span>01</span><b>Higgsfield</b><small>동물 동작 영상</small></div><ChevronRight size={17} /><div><span>02</span><b>6 프레임</b><small>움직임 순서 선택</small></div><ChevronRight size={17} /><div><span>03</span><b>60 × 40</b><small>촉각 도트 변환</small></div></div>
-            <p className="pipeline-copy">그림을 좌우로 밀어 움직이지 않아요. 영상 속 실제 자세 변화를 여섯 장의 촉각 프레임으로 바꿨어요.</p>
-          </section>
-
-          <section className="rail-section connection-section"><div className="section-heading"><span>05</span><h2>닷패드로 보내요</h2></div><button className="connection-button bluetooth" onClick={connectBluetooth} disabled={connection === "connecting" || connection === "connected"}><Bluetooth size={20} /><span><b>블루투스 연결</b><small>Chrome에서 연결</small></span></button><button className="connection-button" onClick={connectUsb} disabled={connection === "connecting" || connection === "connected"}><Cable size={20} /><span><b>USB 케이블</b><small>유선으로 연결</small></span></button></section>
+          <section className="rail-section connection-section"><div className="section-heading"><span>04</span><h2>닷패드로 보내요</h2></div><button className="connection-button bluetooth" onClick={connectBluetooth} disabled={connection === "connecting" || connection === "connected"}><Bluetooth size={20} /><span><b>블루투스 연결</b><small>Chrome에서 연결</small></span></button><button className="connection-button" onClick={connectUsb} disabled={connection === "connecting" || connection === "connected"}><Cable size={20} /><span><b>USB 케이블</b><small>유선으로 연결</small></span></button></section>
         </aside>
 
         <section className="stage">
