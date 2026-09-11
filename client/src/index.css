@@ -1,149 +1,177 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Gowun+Dodum&family=Manrope:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Gowun+Dodum&family=Manrope:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
-:root { --ink:#f4f5e8; --muted:#9aa59a; --hairline:rgba(235,244,225,.13); --navy:#071019; --navy-2:#0c1720; --lime:#dfff70; --electric:#77f3bd; --signal:#73e3ff; --coral:#ff9b7b; --lavender:#c7b7ff; --danger:#ff837c; --radius:.65rem; }
-* { box-sizing:border-box; } body { margin:0; min-width:320px; background:var(--navy); color:var(--ink); font-family:"Gowun Dodum","Manrope",sans-serif; } button,input,select { font:inherit; } button { border:0; } button:focus-visible,input:focus-visible,select:focus-visible { outline:2px solid var(--lime); outline-offset:3px; } button:disabled { cursor:not-allowed; opacity:.45; }
-.app-shell { min-height:100vh; overflow:hidden; background:radial-gradient(circle at 84% 8%,rgba(119,243,189,.13),transparent 27rem),radial-gradient(circle at 47% -18%,rgba(199,183,255,.1),transparent 32rem),linear-gradient(120deg,#071019,#09131a 60%,#061018); }.topbar { height:78px; display:flex; align-items:center; justify-content:space-between; padding:0 34px; border-bottom:1px solid var(--hairline); background:rgba(5,14,22,.7); backdrop-filter:blur(20px); }.brand-lockup,.topbar-right,.transport-main,.speed-control,.status-message,.sdk-badge,.source-meta,.connection-pill { display:flex; align-items:center; }.brand-lockup { gap:13px; }.brand-mark { width:38px; height:38px; display:grid; grid-template-columns:repeat(2,1fr); gap:4px; padding:3px; border:1px solid rgba(223,255,112,.4); transform:rotate(45deg); }.brand-mark span { border-radius:50%; background:var(--lime); }.brand-mark span:nth-child(2),.brand-mark span:nth-child(3) { opacity:.38; }.brand-mark span:nth-child(4) { background:var(--signal); }.eyebrow { margin:0 0 4px; color:var(--muted); font:500 10px "DM Mono",monospace; letter-spacing:.1em; }.brand-lockup h1 { margin:0; font:700 19px/1 "Syne","Gowun Dodum",sans-serif; letter-spacing:.02em; }.brand-lockup h1 em,.intro-strip h2 em { color:var(--lime); font-style:normal; }.topbar-right { gap:12px; }.connection-pill { gap:8px; height:32px; padding:0 11px; border:1px solid var(--hairline); border-radius:999px; color:#b5bdb6; font:500 11px "DM Mono",monospace; }.connection-led { width:7px; height:7px; border-radius:50%; background:#627067; box-shadow:0 0 0 3px rgba(98,112,103,.12); }.connection-pill.connected { color:var(--electric); border-color:rgba(119,243,189,.24); }.connection-pill.connected .connection-led { background:var(--electric); box-shadow:0 0 12px var(--electric); }.connection-pill.error { color:var(--danger); }.connection-pill.error .connection-led { background:var(--danger); }.compact-button { display:inline-flex; align-items:center; gap:7px; padding:9px 13px; border:1px solid rgba(223,255,112,.45); border-radius:5px; background:rgba(223,255,112,.05); color:var(--lime); font:600 11px "Gowun Dodum",sans-serif; transition:160ms ease-out; }.compact-button:hover:not(:disabled) { background:var(--lime); color:#172109; }.compact-button:active { transform:scale(.97); }.compact-button.disconnect { border-color:rgba(255,131,124,.28); color:#ffb4ae; }.compact-button.disconnect:hover { background:var(--danger); color:#310b09; }
-.intro-strip { display:flex; align-items:center; justify-content:space-between; gap:30px; padding:28px 34px; border-bottom:1px solid var(--hairline); background:linear-gradient(90deg,rgba(15,33,38,.68),rgba(11,29,36,.22)); }.intro-strip h2 { margin:0; font:700 clamp(20px,2.3vw,31px)/1.25 "Gowun Dodum",sans-serif; letter-spacing:-.07em; }.how-to { display:flex; align-items:center; gap:9px; color:#c5d2c5; }.how-to span { width:25px; height:25px; display:grid; place-items:center; border-radius:50%; background:var(--lime); color:#17220c; font:700 11px "DM Mono",monospace; }.how-to p { margin:0 4px 0 0; font-size:12px; }.how-to svg { color:var(--muted); }
-.workspace { min-height:calc(100vh - 214px); display:grid; grid-template-columns:345px minmax(0,1fr); }.control-rail { padding:27px 23px; border-right:1px solid var(--hairline); background:rgba(8,19,28,.5); }.rail-section { padding-bottom:23px; margin-bottom:23px; border-bottom:1px solid var(--hairline); }.rail-section:last-child { margin-bottom:0; border-bottom:0; }.section-heading { display:flex; align-items:baseline; gap:10px; margin-bottom:15px; }.section-heading span { color:var(--lime); font:500 10px "DM Mono",monospace; }.section-heading h2 { margin:0; text-transform:uppercase; font:700 12px "Gowun Dodum",sans-serif; letter-spacing:.02em; }
-.animal-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }.animal-card { position:relative; min-height:67px; display:flex; align-items:center; gap:9px; padding:10px; border:1px solid var(--hairline); border-radius:8px; background:rgba(255,255,255,.018); color:#ced7cf; text-align:left; cursor:pointer; transition:180ms ease-out; }.animal-card svg { color:#a7b4a8; }.animal-card span { display:grid; gap:2px; }.animal-card b { font-size:12px; }.animal-card small { color:var(--muted); font-size:10px; }.animal-card:hover { transform:translateY(-1px); border-color:rgba(223,255,112,.55); background:rgba(223,255,112,.06); }.animal-card.selected { border-color:var(--lime); background:linear-gradient(135deg,rgba(223,255,112,.16),rgba(119,243,189,.06)); color:var(--ink); box-shadow:inset 0 0 18px rgba(223,255,112,.06); }.animal-card.selected svg { color:var(--lime); }.card-check { position:absolute; top:7px; right:7px; color:var(--lime); }
-.mission-box { position:relative; overflow:hidden; padding:16px; border:1px solid rgba(119,243,189,.24); border-radius:9px; background:linear-gradient(130deg,rgba(119,243,189,.09),rgba(199,183,255,.045)); }.mission-box::after { position:absolute; right:-17px; bottom:-21px; width:90px; height:90px; border:1px solid rgba(119,243,189,.13); border-radius:50%; content:""; }.mission-box .section-heading { margin-bottom:9px; }.mission-icon { width:43px; height:43px; display:grid; place-items:center; margin-bottom:9px; border-radius:50%; color:var(--electric); background:rgba(119,243,189,.12); }.mission-title { margin:0; color:var(--lime); font-size:15px; font-weight:700; }.mission-copy { margin:5px 0 11px; color:#c5d0c5; font-size:11px; line-height:1.58; }.mission-prompt { position:relative; z-index:1; display:flex; align-items:center; gap:6px; color:#dbeccf; font-size:10px; }.mission-prompt svg { color:var(--signal); }
-.upload-zone { display:flex; flex-direction:column; align-items:center; padding:17px 12px 14px; border:1px dashed rgba(232,244,224,.26); border-radius:7px; background:linear-gradient(130deg,rgba(255,255,255,.035),transparent); text-align:center; cursor:pointer; transition:180ms ease-out; }.upload-zone:hover { border-color:var(--lime); background:rgba(223,255,112,.055); }.upload-zone input { display:none; }.upload-icon { width:38px; height:38px; display:grid; place-items:center; margin-bottom:9px; border-radius:50%; color:var(--lime); background:rgba(223,255,112,.09); }.upload-zone strong { font-size:11px; }.upload-zone small { margin-top:4px; color:var(--muted); font-size:9px; }.browse-link { display:inline-flex; align-items:center; gap:5px; margin-top:10px; background:none; color:var(--signal); font:500 10px "Gowun Dodum",sans-serif; text-decoration:underline; cursor:pointer; }.source-meta { gap:7px; overflow:hidden; margin:11px 2px 12px; color:#aeb8b0; font:400 10px "DM Mono",monospace; white-space:nowrap; text-overflow:ellipsis; }.source-dot { flex:0 0 auto; width:6px; height:6px; border-radius:50%; background:var(--signal); box-shadow:0 0 8px var(--signal); }.control-label,.slider-head label,.speed-control label { display:block; margin-bottom:8px; color:#aab4ad; font:500 10px "Gowun Dodum",sans-serif; }.rail-section select { width:100%; padding:9px 10px; appearance:none; border:1px solid var(--hairline); border-radius:5px; background:#101d25; color:var(--ink); font-size:11px; }.slider-head { display:flex; justify-content:space-between; align-items:center; margin-top:13px; }.slider-head label { margin:0; }.slider-head b,.speed-control b { color:var(--lime); font:500 10px "DM Mono",monospace; } input[type="range"] { width:100%; height:3px; margin:8px 0 0; appearance:none; border-radius:999px; background:linear-gradient(90deg,var(--lime),rgba(223,255,112,.16)); accent-color:var(--lime); cursor:pointer; }
-.connection-button { width:100%; display:flex; align-items:center; gap:10px; margin-bottom:8px; padding:11px; border:1px solid var(--hairline); border-radius:6px; background:transparent; color:#cfd7d0; text-align:left; cursor:pointer; transition:160ms ease-out; }.connection-button:hover:not(:disabled) { border-color:rgba(119,243,189,.58); background:rgba(119,243,189,.055); color:var(--electric); }.connection-button.bluetooth svg { color:var(--electric); }.connection-button svg { color:#99a59d; }.connection-button span { display:grid; gap:2px; }.connection-button b { font-size:11px; }.connection-button small { color:var(--muted); font-size:9px; }
-.stage { position:relative; display:flex; flex-direction:column; justify-content:center; max-width:1080px; width:100%; margin:0 auto; padding:43px clamp(28px,6vw,88px) 35px; }.stage-bar { display:flex; align-items:end; justify-content:space-between; margin-bottom:20px; }.stage-bar h2 { margin:0; font:700 clamp(25px,3.1vw,40px)/1.1 "Gowun Dodum",sans-serif; letter-spacing:-.08em; }.stage-bar h2 span { color:var(--lime); }.matrix-stat { display:grid; grid-template-columns:auto auto auto; align-items:center; column-gap:5px; color:var(--lime); font:600 18px "DM Mono",monospace; }.matrix-stat i { color:var(--muted); font-style:normal; }.matrix-stat small { grid-column:1/-1; margin-top:5px; color:var(--muted); font-size:8px; letter-spacing:.08em; }.preview-shell { position:relative; width:100%; max-width:820px; aspect-ratio:1.5/1; display:grid; place-items:center; overflow:hidden; border:1px solid rgba(231,245,225,.23); background:linear-gradient(135deg,rgba(20,40,46,.72),rgba(7,17,26,.82)); box-shadow:inset 0 0 80px rgba(0,0,0,.45),0 28px 80px rgba(0,0,0,.22); }.preview-shell::before { position:absolute; inset:0; background-image:linear-gradient(rgba(214,246,215,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(214,246,215,.035) 1px,transparent 1px); background-size:33px 33px; content:""; }.preview-shell::after { position:absolute; inset:0; opacity:.18; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E"); pointer-events:none; content:""; }.preview-corner { position:absolute; z-index:2; width:15px; height:15px; border-color:var(--lime); }.tl { top:11px; left:11px; border-top:1px solid; border-left:1px solid; }.tr { top:11px; right:11px; border-top:1px solid; border-right:1px solid; }.bl { bottom:11px; left:11px; border-bottom:1px solid; border-left:1px solid; }.br { right:11px; bottom:11px; border-right:1px solid; border-bottom:1px solid; }.scanline { position:absolute; z-index:1; top:0; width:100%; height:1px; opacity:.34; background:var(--electric); box-shadow:0 0 20px var(--electric); animation:scan 4s linear infinite; }.dot-matrix { position:relative; z-index:1; display:grid; grid-template-columns:repeat(60,1fr); width:min(76%,620px); aspect-ratio:1.5/1; gap:clamp(1px,.26vw,3px); }.dot { min-width:0; min-height:0; border-radius:50%; background:rgba(194,217,204,.08); box-shadow:inset 0 0 1px rgba(255,255,255,.14); }.dot.is-up { background:var(--lime); box-shadow:0 0 7px rgba(223,255,112,.67),0 0 14px rgba(223,255,112,.22); }.preview-footer { position:absolute; z-index:3; bottom:12px; left:17px; right:17px; display:flex; justify-content:space-between; color:#8b9c91; font:400 8px "DM Mono",monospace; letter-spacing:.06em; }.transport-panel { display:flex; align-items:center; justify-content:space-between; gap:24px; max-width:820px; padding-top:18px; }.transport-main { gap:7px; }.play-button { display:inline-flex; align-items:center; gap:8px; padding:12px 19px; border-radius:5px; background:var(--lime); color:#1b270d; font:700 12px "Gowun Dodum",sans-serif; cursor:pointer; transition:transform .16s cubic-bezier(.23,1,.32,1),background .16s; }.play-button:hover { background:#edffae; }.play-button.playing { background:var(--electric); }.play-button:active,.frame-button:active { transform:scale(.97); }.frame-button { width:42px; height:42px; display:grid; place-items:center; border:1px solid rgba(223,255,112,.3); border-radius:5px; background:rgba(223,255,112,.04); color:var(--lime); cursor:pointer; transition:160ms ease-out; }.frame-button:hover { background:rgba(223,255,112,.13); }.speed-control { flex:1; justify-content:end; gap:9px; }.speed-control label { margin:0; }.speed-control input { max-width:150px; margin:0; }.speed-control b { min-width:38px; color:var(--signal); }.status-deck { height:54px; display:flex; align-items:center; justify-content:space-between; padding:0 34px; border-top:1px solid var(--hairline); background:#071018; }.status-message { gap:10px; min-width:0; }.status-icon { width:24px; height:24px; display:grid; flex:0 0 auto; place-items:center; border-radius:50%; background:rgba(119,243,189,.1); color:var(--electric); }.status-icon.error { background:rgba(255,131,124,.1); color:var(--danger); }.status-message p { overflow:hidden; margin:0; color:#bdc8be; font:400 10px "Gowun Dodum",sans-serif; white-space:nowrap; text-overflow:ellipsis; }.sdk-badge { gap:7px; color:#93a097; font:500 9px "DM Mono",monospace; letter-spacing:.05em; }.sdk-badge svg { color:var(--signal); }.sdk-badge b { color:var(--ink); font-weight:500; } @keyframes scan { from { transform:translateY(0); } to { transform:translateY(420px); } } @media(prefers-reduced-motion:reduce){.scanline{animation:none}} @media(max-width:900px){.intro-strip{padding:24px;align-items:flex-start;flex-direction:column}.workspace{grid-template-columns:1fr}.control-rail{order:2;border-top:1px solid var(--hairline);border-right:0}.stage{padding:38px 28px 30px}.animal-section{max-width:560px}.source-section{max-width:560px}.connection-section{display:grid;grid-template-columns:1fr 1fr;gap:8px}.connection-section .section-heading{grid-column:1/-1}.connection-button{margin:0}} @media(max-width:600px){.topbar{height:auto;min-height:76px;padding:15px 18px}.topbar-right .connection-pill{display:none}.topbar-right .compact-button{font-size:0;padding:10px}.topbar-right .compact-button svg{margin:0}.brand-lockup h1{font-size:17px}.intro-strip{padding:23px 22px}.intro-strip h2{font-size:24px}.how-to{display:none}.stage{padding:31px 22px 28px}.stage-bar h2{font-size:29px}.matrix-stat{font-size:14px}.preview-shell{aspect-ratio:1.32/1}.dot-matrix{width:88%}.preview-footer{font-size:7px}.preview-footer span:last-child{display:none}.transport-panel{align-items:flex-start;flex-direction:column;gap:15px}.speed-control{width:100%;justify-content:flex-start}.speed-control input{flex:1;max-width:none}.control-rail{padding:28px 22px}.animal-grid{gap:8px}.animal-card{min-height:62px}.connection-section{display:grid;grid-template-columns:1fr 1fr}.connection-button{padding:10px 8px}.connection-button small{font-size:8px}.status-deck{padding:0 18px}.sdk-badge{display:none}.status-message p{font-size:10px}}
+:root {
+  --paper: #f7f8f4;
+  --paper-strong: #ffffff;
+  --ink: #122039;
+  --ink-soft: #5e6980;
+  --line: #dfe4eb;
+  --blue: #1769ff;
+  --blue-deep: #0a348e;
+  --blue-ink: #061a4b;
+  --blue-mist: #edf4ff;
+  --cyan: #27c3e6;
+  --lime: #d9ff6c;
+  --success: #087b63;
+  --danger: #ba3c36;
+  --radius: 18px;
+  --shadow: 0 16px 45px rgba(20, 47, 95, .10);
+}
 
-.auto-source { display:flex; align-items:center; gap:9px; padding:11px; border:1px solid rgba(199,183,255,.28); border-radius:8px; background:linear-gradient(135deg,rgba(199,183,255,.11),rgba(119,243,189,.04)); }
-.auto-source-icon { width:32px; height:32px; display:grid; flex:0 0 auto; place-items:center; border-radius:50%; background:rgba(199,183,255,.17); color:var(--lavender); }
-.auto-source > div:nth-child(2) { min-width:0; flex:1; }
-.auto-source b { display:block; font-size:10px; color:#e6ddff; }
-.auto-source p { margin:3px 0 0; color:#acb7b0; font-size:9px; line-height:1.45; }
-.auto-source button { flex:0 0 auto; padding:7px 8px; border:1px solid rgba(199,183,255,.45); border-radius:5px; background:rgba(199,183,255,.1); color:#eeeaff; font:600 9px "Gowun Dodum",sans-serif; cursor:pointer; transition:160ms ease-out; }
-.auto-source button:hover:not(:disabled) { background:var(--lavender); color:#171327; }
-.source-divider { position:relative; height:24px; display:grid; place-items:center; margin:2px 0; color:#718178; font-size:9px; }
-.source-divider::before { position:absolute; inset:50% 0 auto; height:1px; background:var(--hairline); content:""; }
-.source-divider span { position:relative; z-index:1; padding:0 8px; background:#0a1620; }
-.video-button { display:inline-flex; align-items:center; gap:6px; height:42px; padding:0 11px; border:1px solid rgba(199,183,255,.42); border-radius:5px; background:rgba(199,183,255,.07); color:#eeeaff; font:600 10px "Gowun Dodum",sans-serif; cursor:pointer; transition:160ms ease-out; }
-.video-button:hover:not(:disabled) { background:rgba(199,183,255,.22); border-color:var(--lavender); }
-.video-button:active { transform:scale(.97); }
-@media (max-width:600px) { .auto-source { align-items:flex-start; } .auto-source button { align-self:center; } .video-button { padding:0 9px; } }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; min-width: 320px; background: var(--paper); color: var(--ink); font-family: "Manrope", "Gowun Dodum", sans-serif; }
+button, input, select { font: inherit; }
+button { border: 0; cursor: pointer; }
+button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid rgba(23, 105, 255, .35); outline-offset: 3px; }
+button:disabled { cursor: not-allowed; opacity: .45; }
 
-/* Learning playground upgrade: large, cheerful controls for younger learners */
-.catalog-section { background:linear-gradient(145deg,rgba(106,184,255,.10),rgba(119,243,189,.045)); }
-.section-heading h2 { font-size:13px; }
-.catalog-count,.score-chip { margin-left:auto; padding:4px 8px; border:1px solid rgba(223,255,112,.35); border-radius:999px; color:var(--lime); background:rgba(223,255,112,.08); font:700 9px "DM Mono",monospace; }
-.score-chip { color:#ffe992; border-color:rgba(255,233,146,.4); background:rgba(255,233,146,.08); }
-.category-tabs { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:5px; margin:11px 0 10px; }
-.category-tabs button { min-height:48px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; border:1px solid var(--hairline); border-radius:9px; background:rgba(255,255,255,.025); color:#aab8ad; font:700 8px "Gowun Dodum",sans-serif; transition:transform .16s cubic-bezier(.23,1,.32,1),background .16s,border-color .16s; }
-.category-tabs button span { font-size:16px; line-height:1; }
-.category-tabs button:hover,.category-tabs button.active { border-color:rgba(223,255,112,.72); color:var(--lime); background:rgba(223,255,112,.12); }
-.category-tabs button:active,.catalog-card:active,.quiz-options button:active,.voice-button:active { transform:scale(.96); }
-.catalog-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; max-height:327px; padding-right:3px; overflow-y:auto; scrollbar-color:rgba(223,255,112,.55) transparent; }
-.catalog-card { position:relative; min-height:68px; display:flex; align-items:center; gap:8px; padding:9px; text-align:left; border:1px solid var(--hairline); border-radius:10px; background:rgba(6,16,25,.46); color:#d9e4dc; transition:transform .16s cubic-bezier(.23,1,.32,1),border-color .16s,background .16s; }
-.catalog-card:hover { background:rgba(255,255,255,.045); border-color:rgba(198,183,255,.55); }
-.catalog-card.selected { border-color:var(--lime); background:linear-gradient(135deg,rgba(223,255,112,.16),rgba(119,243,189,.07)); box-shadow:inset 0 0 0 1px rgba(223,255,112,.12); }
-.catalog-emoji { width:32px; height:32px; display:grid; flex:0 0 auto; place-items:center; border-radius:10px; background:rgba(255,255,255,.07); font-size:22px; }
-.catalog-card b { display:block; color:#fbfff5; font:700 12px "Gowun Dodum",sans-serif; }
-.catalog-card small { display:block; max-width:95px; margin-top:2px; overflow:hidden; color:#9aac9e; font:400 8px "Gowun Dodum",sans-serif; line-height:1.25; text-overflow:ellipsis; white-space:nowrap; }
-.catalog-card .card-check { position:absolute; top:7px; right:7px; color:var(--lime); }
-.mission-box { background:linear-gradient(150deg,rgba(119,243,189,.12),rgba(6,19,31,.78)); }
-.mission-hero { display:flex; align-items:flex-start; gap:10px; }
-.mission-hero > span { width:44px; height:44px; display:grid; flex:0 0 auto; place-items:center; border-radius:14px; background:rgba(119,243,189,.13); font-size:28px; }
-.mission-box .mission-title { margin:0 0 5px; font-size:14px; }
-.mission-box .mission-copy { margin:0; font-size:10px; line-height:1.55; }
-.voice-button { width:100%; min-height:52px; display:flex; align-items:center; justify-content:center; gap:8px; margin:12px 0 9px; border:1px solid rgba(119,243,189,.55); border-radius:10px; background:linear-gradient(135deg,#7bf3bd,#b7ffd0); color:#083021; font:800 12px "Gowun Dodum",sans-serif; box-shadow:0 8px 20px rgba(119,243,189,.12); transition:transform .16s cubic-bezier(.23,1,.32,1),filter .16s; }
-.voice-button:hover { filter:brightness(1.08); }
-.voice-button.speaking { animation:voicePulse 1s ease-in-out infinite; }
-.mission-box .mission-prompt { margin-top:0; padding:9px; border-radius:9px; font-size:10px; }
-.quiz-section { border:1px solid rgba(255,233,146,.20); background:linear-gradient(145deg,rgba(255,202,79,.11),rgba(198,183,255,.07)); }
-.quiz-question { margin:0 0 10px; color:#f9f7ed; font:600 12px "Gowun Dodum",sans-serif; line-height:1.5; }
-.quiz-options { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
-.quiz-options button { min-height:46px; display:flex; align-items:center; gap:7px; padding:7px; border:1px solid rgba(255,255,255,.12); border-radius:9px; background:rgba(8,18,28,.66); color:#e9f0e8; text-align:left; font:700 10px "Gowun Dodum",sans-serif; transition:transform .16s cubic-bezier(.23,1,.32,1),border-color .16s,background .16s; }
-.quiz-options button span { width:23px; height:23px; display:grid; flex:0 0 auto; place-items:center; border-radius:50%; background:rgba(255,255,255,.1); color:#fff5bc; font:700 10px "DM Mono",monospace; }
-.quiz-options button:hover:not(:disabled),.quiz-options button.chosen { border-color:#ffe992; background:rgba(255,233,146,.14); }
-.quiz-options button.answer { border-color:var(--electric); background:rgba(119,243,189,.18); color:#dffff0; }
-.quiz-options button:disabled { cursor:default; }
-.quiz-feedback { min-height:30px; margin:10px 0 0; color:#d7d2bb; font:500 10px "Gowun Dodum",sans-serif; line-height:1.45; }
-.quiz-section.correct .quiz-feedback { color:var(--electric); }
-.quiz-section.wrong .quiz-feedback { color:#ffd28c; }
-.source-section .auto-source { padding:12px; }
-.source-section .auto-source button,.browse-link { min-height:36px; padding:7px 10px; font-size:10px; }
-.source-section .upload-zone { min-height:132px; padding:13px; }
-.file-input { display:none; }
-.source-section select { min-height:42px; font-size:11px; }
-.connection-button { min-height:64px; padding:12px; border-radius:10px; }
-.connection-button b { font-size:12px; }
-.connection-button small { margin-top:2px; font-size:9px; }
-.compact-button { min-height:42px; padding:0 14px; font-size:11px; border-radius:9px; }
-.play-button { min-height:52px; padding:12px 21px; border-radius:10px; font-size:13px; }
-.frame-button,.video-button { min-height:52px; height:52px; border-radius:10px; }
-.video-button { padding:0 14px; font-size:11px; }
-@keyframes voicePulse { 50% { transform:translateY(-1px); box-shadow:0 0 0 6px rgba(119,243,189,.08),0 8px 22px rgba(119,243,189,.2); } }
-@media (max-width:900px) { .catalog-grid { max-height:none; } }
-@media (max-width:600px) { .category-tabs { grid-template-columns:repeat(5,minmax(54px,1fr)); overflow-x:auto; padding-bottom:2px; } .category-tabs button { min-width:54px; } .catalog-grid { grid-template-columns:repeat(2,minmax(0,1fr)); max-height:350px; } .catalog-card { min-height:72px; } .catalog-card small { max-width:120px; } .transport-main { width:100%; flex-wrap:wrap; } .play-button { flex:1; justify-content:center; } .video-button { flex:1; justify-content:center; } }
+.app-shell { min-height: 100vh; background: var(--paper); overflow: clip; }
+.topbar { min-height: 74px; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 14px clamp(22px, 4vw, 68px); border-bottom: 1px solid var(--line); background: rgba(255, 255, 255, .94); color: var(--ink); }
+.brand-lockup, .topbar-right, .transport-main, .speed-control, .status-message, .sdk-badge, .connection-pill { display: flex; align-items: center; }
+.brand-lockup { gap: 12px; }
+.brand-mark { width: 35px; height: 35px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; padding: 3px; border-radius: 11px; background: var(--blue); transform: rotate(45deg); box-shadow: 0 6px 18px rgba(23, 105, 255, .23); }
+.brand-mark span { border-radius: 50%; background: #fff; }
+.brand-mark span:nth-child(2), .brand-mark span:nth-child(3) { opacity: .56; }
+.brand-mark span:nth-child(4) { background: var(--lime); }
+.brand-lockup > div:last-child { transform: none; }
+.eyebrow { margin: 0 0 4px; color: #6f7c90; font: 500 10px "DM Mono", monospace; letter-spacing: .09em; text-transform: uppercase; }
+.brand-lockup h1 { margin: 0; font: 800 18px/1 "Manrope", sans-serif; letter-spacing: -.05em; }
+.brand-lockup h1 em, .intro-strip h2 em { color: inherit; font-style: normal; }
+.topbar-right { gap: 10px; }
+.connection-pill { gap: 8px; min-height: 33px; padding: 0 12px; border: 1px solid #d5dce6; border-radius: 999px; color: #677288; background: #fff; font: 500 10px "DM Mono", monospace; }
+.connection-led { width: 7px; height: 7px; border-radius: 50%; background: #aeb8c7; }
+.connection-pill.connected { border-color: #91d9cd; color: var(--success); background: #f2fffb; }
+.connection-pill.connected .connection-led { background: #0faa88; box-shadow: 0 0 0 4px rgba(15, 170, 136, .12); }
+.connection-pill.error { border-color: #efb9b5; color: var(--danger); background: #fff8f7; }
+.connection-pill.error .connection-led { background: var(--danger); }
+.compact-button { min-height: 38px; display: inline-flex; align-items: center; gap: 7px; padding: 0 14px; border-radius: 999px; background: var(--blue); color: #fff; font: 700 11px "Gowun Dodum", sans-serif; transition: transform .16s cubic-bezier(.23, 1, .32, 1), background .16s; }
+.compact-button:hover:not(:disabled) { background: #0759e8; transform: translateY(-1px); }
+.compact-button:active { transform: scale(.97); }
+.compact-button.disconnect { background: #fff1f0; color: var(--danger); }
+.compact-button.disconnect:hover { background: #ffdeda; }
 
-.workspace .stage { justify-content:flex-start; }
+.intro-strip { position: relative; min-height: 250px; display: flex; align-items: center; justify-content: space-between; gap: 36px; padding: 52px clamp(24px, 8vw, 150px); overflow: hidden; color: #fff; background: radial-gradient(circle at 80% 22%, rgba(48, 204, 228, .55), transparent 18rem), linear-gradient(113deg, #071a4d 0%, #0a3a9a 58%, #0c5ed4 100%); }
+.intro-strip::before { position: absolute; right: -85px; bottom: -120px; width: 520px; height: 350px; border: 1px solid rgba(255,255,255,.18); border-radius: 50%; box-shadow: 0 0 0 68px rgba(255,255,255,.04), 0 0 0 136px rgba(255,255,255,.025); content: ""; }
+.intro-strip > div { position: relative; z-index: 1; }
+.intro-strip .eyebrow { color: rgba(255,255,255,.68); }
+.intro-strip h2 { max-width: 630px; margin: 0; font: 700 clamp(34px, 4.2vw, 60px)/1.08 "Manrope", "Gowun Dodum", sans-serif; letter-spacing: -.07em; }
+.intro-strip h2 em { color: var(--lime); }
+.how-to { max-width: 430px; display: flex; align-items: center; gap: 10px; padding: 16px 18px; border: 1px solid rgba(255,255,255,.23); border-radius: 16px; background: rgba(255,255,255,.10); backdrop-filter: blur(10px); color: #fff; }
+.how-to span { width: 27px; height: 27px; display: grid; flex: 0 0 auto; place-items: center; border-radius: 50%; background: #fff; color: var(--blue-deep); font: 700 11px "DM Mono", monospace; }
+.how-to p { margin: 0; font: 700 11px "Gowun Dodum", sans-serif; white-space: nowrap; }
+.how-to svg { flex: 0 0 auto; color: rgba(255,255,255,.72); }
 
-/* Generated-motion replacement: real pose changes instead of shifted icon graphics */
-.catalog-note { display:flex; align-items:center; gap:6px; margin:-5px 0 10px; color:var(--electric); font:600 10px "Gowun Dodum",sans-serif; }
-.catalog-note svg { color:var(--signal); }
-.catalog-card.pending { opacity:.58; border-style:dashed; }
-.catalog-card.pending:hover { opacity:.82; }
-.pending-dot { position:absolute; top:10px; right:10px; width:7px; height:7px; border-radius:50%; background:#78877d; box-shadow:0 0 0 3px rgba(120,135,125,.12); }
-.pipeline-section { padding:16px; border:1px solid rgba(115,227,255,.21); border-radius:10px; background:linear-gradient(145deg,rgba(115,227,255,.07),rgba(199,183,255,.04)); }
-.pipeline-section .section-heading { margin-bottom:12px; }
-.motion-pipeline { display:flex; align-items:center; justify-content:space-between; gap:4px; }
-.motion-pipeline > div { min-width:0; display:grid; gap:3px; }
-.motion-pipeline span { color:var(--signal); font:600 8px "DM Mono",monospace; }
-.motion-pipeline b { color:#effff6; font:700 10px "Gowun Dodum",sans-serif; white-space:nowrap; }
-.motion-pipeline small { color:#9aada0; font:400 8px/1.35 "Gowun Dodum",sans-serif; }
-.motion-pipeline svg { flex:0 0 auto; color:var(--signal); opacity:.7; }
-.pipeline-copy { margin:12px 0 0; color:#bdcbbc; font:400 10px/1.55 "Gowun Dodum",sans-serif; }
-.preview-footer span:last-child { color:var(--electric); }
-@media (max-width:600px) { .motion-pipeline { gap:3px; } .motion-pipeline b { font-size:9px; } .motion-pipeline small { font-size:7px; } .motion-pipeline svg { width:13px; } }
+.workspace { display: grid; grid-template-columns: minmax(300px, 350px) minmax(0, 1fr); max-width: 1480px; margin: 0 auto; padding: 48px clamp(20px, 4vw, 64px) 60px; gap: clamp(30px, 5vw, 78px); }
+.control-rail { display: flex; flex-direction: column; gap: 18px; }
+.rail-section { padding: 20px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper-strong); box-shadow: 0 6px 21px rgba(22, 47, 85, .035); }
+.section-heading { display: flex; align-items: center; gap: 9px; margin-bottom: 13px; }
+.section-heading span { color: var(--blue); font: 500 10px "DM Mono", monospace; }
+.section-heading h2 { margin: 0; color: var(--ink); font: 800 12px "Manrope", "Gowun Dodum", sans-serif; letter-spacing: -.02em; }
+.catalog-count, .score-chip { margin-left: auto; padding: 4px 8px; border-radius: 999px; color: var(--blue); background: var(--blue-mist); font: 700 9px "DM Mono", monospace; }
+.score-chip { color: #915b00; background: #fff4d6; }
+.catalog-section { background: #fff; }
+.catalog-note { display: flex; align-items: center; gap: 6px; margin: -2px 0 13px; color: var(--ink-soft); font: 600 10px "Gowun Dodum", sans-serif; }
+.catalog-note svg { color: var(--blue); }
+.category-tabs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; margin-bottom: 12px; }
+.category-tabs button { min-height: 45px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; border: 1px solid var(--line); border-radius: 11px; background: #fff; color: #657187; font: 700 8px "Gowun Dodum", sans-serif; transition: all .16s cubic-bezier(.23, 1, .32, 1); }
+.category-tabs button span { font-size: 15px; }
+.category-tabs button:hover, .category-tabs button.active { border-color: #8bb5ff; background: var(--blue-mist); color: var(--blue); }
+.catalog-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; max-height: 338px; padding-right: 3px; overflow-y: auto; scrollbar-color: #aec9ff transparent; }
+.catalog-card { position: relative; min-height: 66px; display: flex; align-items: center; gap: 8px; padding: 8px; border: 1px solid var(--line); border-radius: 12px; background: #fff; color: var(--ink); text-align: left; transition: transform .16s cubic-bezier(.23, 1, .32, 1), border-color .16s, box-shadow .16s; }
+.catalog-card:hover { border-color: #9ec0ff; box-shadow: 0 7px 16px rgba(25, 91, 210, .08); transform: translateY(-1px); }
+.catalog-card.selected { border-color: var(--blue); background: #f4f8ff; box-shadow: inset 0 0 0 1px rgba(23, 105, 255, .10); }
+.catalog-emoji { width: 31px; height: 31px; display: grid; flex: 0 0 auto; place-items: center; border-radius: 10px; background: #f2f5f9; font-size: 20px; }
+.catalog-card b { display: block; color: var(--ink); font: 800 11px "Gowun Dodum", sans-serif; }
+.catalog-card small { display: block; max-width: 98px; margin-top: 2px; overflow: hidden; color: #6e798e; font: 400 8px/1.3 "Gowun Dodum", sans-serif; text-overflow: ellipsis; white-space: nowrap; }
+.catalog-card .card-check { position: absolute; top: 6px; right: 6px; color: var(--blue); }
+.catalog-card.pending { opacity: .55; border-style: dashed; }
+.pending-dot { position: absolute; top: 10px; right: 10px; width: 7px; height: 7px; border-radius: 50%; background: #bbc4d0; }
 
-/* Slow exploration mode: intentional manual frame reading for tactile learners */
-.slow-explore { display:flex; align-items:center; justify-content:space-between; gap:18px; max-width:820px; margin-top:16px; padding:12px 14px; border:1px solid rgba(115,227,255,.2); border-radius:10px; background:linear-gradient(120deg,rgba(115,227,255,.07),rgba(199,183,255,.045)); transition:180ms ease-out; }
-.slow-explore.active { border-color:rgba(115,227,255,.62); box-shadow:inset 0 0 20px rgba(115,227,255,.05); }
-.slow-explore-copy { display:flex; align-items:center; gap:10px; min-width:0; }
-.slow-explore-icon { width:35px; height:35px; display:grid; flex:0 0 auto; place-items:center; border-radius:50%; color:var(--signal); background:rgba(115,227,255,.12); }
-.slow-explore-copy p { margin:0 0 2px; color:#f1fff7; font:700 12px "Gowun Dodum",sans-serif; }
-.slow-explore-copy small { display:block; color:#a8bcb1; font:400 9px/1.4 "Gowun Dodum",sans-serif; }
-.slow-explore-controls { display:flex; flex:0 0 auto; align-items:center; gap:6px; }
-.slow-frame-button,.slow-listen-button { min-height:40px; display:inline-flex; align-items:center; justify-content:center; gap:5px; padding:0 10px; border:1px solid rgba(115,227,255,.3); border-radius:8px; color:#d8f8ff; background:rgba(115,227,255,.045); font:700 10px "Gowun Dodum",sans-serif; transition:160ms ease-out; }
-.slow-listen-button { border-color:rgba(115,227,255,.58); color:#062832; background:var(--signal); }
-.slow-frame-button:hover { border-color:var(--signal); background:rgba(115,227,255,.13); }
-.slow-listen-button:hover { filter:brightness(1.08); }
-.slow-frame-button:active,.slow-listen-button:active { transform:scale(.97); }
-@media (max-width:600px) { .slow-explore { align-items:stretch; flex-direction:column; gap:10px; margin-top:13px; padding:12px; } .slow-explore-controls { width:100%; } .slow-frame-button { flex:0 0 auto; padding:0 9px; } .slow-listen-button { flex:1; } }
+.mission-box { position: relative; overflow: hidden; background: linear-gradient(135deg, #f5f9ff, #fff); }
+.mission-box::after { position: absolute; right: -34px; bottom: -38px; width: 135px; height: 135px; border-radius: 50%; background: #dcebff; content: ""; }
+.mission-box > * { position: relative; z-index: 1; }
+.mission-box .section-heading { margin-bottom: 11px; }
+.mission-hero { display: flex; align-items: flex-start; gap: 10px; }
+.mission-hero > span { width: 43px; height: 43px; display: grid; flex: 0 0 auto; place-items: center; border-radius: 13px; background: #e6f0ff; font-size: 27px; }
+.mission-title { margin: 0 0 4px; color: var(--blue-deep); font: 800 13px "Gowun Dodum", sans-serif; }
+.mission-copy { margin: 0; color: var(--ink-soft); font: 400 10px/1.55 "Gowun Dodum", sans-serif; }
+.voice-button { width: 100%; min-height: 47px; display: flex; align-items: center; justify-content: center; gap: 7px; margin: 12px 0 9px; border-radius: 999px; background: var(--blue); color: #fff; font: 800 11px "Gowun Dodum", sans-serif; box-shadow: 0 7px 17px rgba(23, 105, 255, .18); transition: transform .16s cubic-bezier(.23, 1, .32, 1), background .16s; }
+.voice-button:hover { background: #0d58df; transform: translateY(-1px); }
+.voice-button:active { transform: scale(.97); }
+.voice-button.speaking { animation: voicePulse 1s ease-in-out infinite; }
+.mission-prompt { display: flex; align-items: center; gap: 6px; color: #516079; font: 600 9px "Gowun Dodum", sans-serif; }
+.mission-prompt svg { color: var(--blue); }
 
-/* Motion-recall quiz: unlocked only after all six tactile poses are explored. */
-.slow-explore { flex-wrap:wrap; }
-.review-quiz { flex:1 0 100%; display:grid; gap:10px; padding:11px; border:1px solid rgba(255,226,132,.2); border-radius:9px; background:rgba(7,16,25,.48); }
-.review-quiz.locked { opacity:.7; }
-.review-quiz.unlocked { border-color:rgba(255,226,132,.5); background:linear-gradient(120deg,rgba(255,202,79,.1),rgba(115,227,255,.055)); }
-.review-heading { display:flex; align-items:center; gap:8px; }
-.review-heading > div { min-width:0; flex:1; }
-.review-number { flex:0 0 auto; display:grid; place-items:center; width:34px; height:28px; border-radius:7px; color:#251e07; background:#ffe284; font:800 9px "DM Mono",monospace; }
-.review-heading p { margin:0; color:#fff9dc; font:700 11px "Gowun Dodum",sans-serif; }
-.review-heading small { display:block; margin-top:2px; color:#b9c5b5; font:400 9px/1.35 "Gowun Dodum",sans-serif; }
-.review-heading b { flex:0 0 auto; padding:4px 7px; border:1px solid rgba(255,226,132,.3); border-radius:999px; color:#ffe284; font:700 8px "DM Mono",monospace; }
-.review-options { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; }
-.review-options button { min-height:42px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; padding:5px; border:1px solid rgba(255,255,255,.12); border-radius:8px; color:#e7f0e9; background:rgba(8,18,28,.72); font:700 10px "Gowun Dodum",sans-serif; transition:transform .16s cubic-bezier(.23,1,.32,1),border-color .16s,background .16s; }
-.review-options button span { font-size:17px; line-height:1; }
-.review-options button:hover { transform:translateY(-1px); border-color:rgba(255,226,132,.7); background:rgba(255,226,132,.1); }
-.review-options button:active { transform:scale(.97); }
-.review-options button.chosen { border-color:#ffe284; }
-.review-options button.answer { border-color:var(--electric); color:#dffff0; background:rgba(119,243,189,.18); }
-.review-options button:disabled { cursor:default; }
-.review-feedback { min-height:14px; margin:0; color:#d7d2bb; font:500 9px/1.4 "Gowun Dodum",sans-serif; }
-.review-quiz.correct .review-feedback { color:var(--electric); }
-.review-quiz.wrong .review-feedback { color:#ffd28c; }
-.review-lock { display:flex; align-items:center; gap:6px; color:#a8bcb1; font:500 9px/1.4 "Gowun Dodum",sans-serif; }
-.review-lock svg { flex:0 0 auto; color:#ffe284; }
-@media (max-width:600px) { .review-quiz { padding:10px; } .review-options { grid-template-columns:repeat(2,1fr); } .review-options button { min-height:46px; flex-direction:row; gap:6px; } }
+.quiz-section { background: #fff; }
+.quiz-question { margin: 0 0 11px; color: var(--ink); font: 600 11px/1.5 "Gowun Dodum", sans-serif; }
+.quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+.quiz-options button { min-height: 43px; display: flex; align-items: center; gap: 7px; padding: 7px; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: #435066; text-align: left; font: 700 9px "Gowun Dodum", sans-serif; transition: all .16s cubic-bezier(.23, 1, .32, 1); }
+.quiz-options button span { width: 22px; height: 22px; display: grid; flex: 0 0 auto; place-items: center; border-radius: 50%; background: #f1f4f8; color: var(--blue); font: 700 9px "DM Mono", monospace; }
+.quiz-options button:hover:not(:disabled), .quiz-options button.chosen { border-color: #95bcff; background: #f3f7ff; }
+.quiz-options button.answer { border-color: #63c8b4; background: #effff9; color: var(--success); }
+.quiz-feedback { min-height: 28px; margin: 9px 0 0; color: var(--ink-soft); font: 500 9px/1.45 "Gowun Dodum", sans-serif; }
+.quiz-section.correct .quiz-feedback { color: var(--success); }
+.quiz-section.wrong .quiz-feedback { color: #b66616; }
 
-/* Grid keeps the review card beneath the controls at every viewport width. */
-.slow-explore { display:grid; grid-template-columns:minmax(0,1fr) auto; }
-.review-quiz { grid-column:1 / -1; box-sizing:border-box; width:100%; min-width:0; }
-@media (max-width:600px) { .slow-explore { display:grid; grid-template-columns:minmax(0,1fr); } .slow-explore-controls { min-width:0; } }
+.pipeline-section { background: #f8fbff; }
+.motion-pipeline { display: flex; align-items: center; justify-content: space-between; gap: 5px; }
+.motion-pipeline > div { min-width: 0; display: grid; gap: 3px; }
+.motion-pipeline span { color: var(--blue); font: 600 8px "DM Mono", monospace; }
+.motion-pipeline b { color: var(--ink); font: 700 9px "Gowun Dodum", sans-serif; white-space: nowrap; }
+.motion-pipeline small { color: var(--ink-soft); font: 400 8px/1.3 "Gowun Dodum", sans-serif; }
+.motion-pipeline svg { flex: 0 0 auto; color: #a4b7d1; }
+.pipeline-copy { margin: 12px 0 0; color: var(--ink-soft); font: 400 9px/1.55 "Gowun Dodum", sans-serif; }
+.connection-section { background: var(--blue-ink); color: #fff; }
+.connection-section .section-heading h2 { color: #fff; }
+.connection-section .section-heading span { color: var(--lime); }
+.connection-button { width: 100%; min-height: 58px; display: flex; align-items: center; gap: 10px; margin-top: 8px; padding: 10px; border: 1px solid rgba(255,255,255,.18); border-radius: 12px; background: rgba(255,255,255,.06); color: #fff; text-align: left; transition: background .16s, transform .16s; }
+.connection-button:hover:not(:disabled) { background: rgba(255,255,255,.15); transform: translateY(-1px); }
+.connection-button svg { color: var(--lime); }
+.connection-button span { display: grid; gap: 2px; }
+.connection-button b { font-size: 10px; }
+.connection-button small { color: rgba(255,255,255,.65); font-size: 8px; }
+
+.stage { min-width: 0; padding-top: 4px; }
+.stage-bar { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 19px; }
+.stage-bar .eyebrow { color: var(--blue); }
+.stage-bar h2 { margin: 0; color: var(--ink); font: 800 clamp(30px, 4vw, 56px)/1.03 "Manrope", "Gowun Dodum", sans-serif; letter-spacing: -.08em; }
+.stage-bar h2 span { color: var(--blue); }
+.matrix-stat { display: grid; grid-template-columns: auto auto auto; align-items: center; column-gap: 5px; padding-bottom: 4px; color: var(--blue); font: 700 17px "DM Mono", monospace; }
+.matrix-stat i { color: #92a0b3; font-style: normal; }
+.matrix-stat small { grid-column: 1 / -1; margin-top: 5px; color: #6e798d; font-size: 8px; letter-spacing: .08em; }
+.preview-shell { position: relative; width: 100%; min-height: min(57vw, 610px); display: grid; place-items: center; overflow: hidden; border-radius: 22px; background: radial-gradient(circle at 48% 40%, #1b4c9f 0%, #0c2c6c 42%, #061a4b 100%); box-shadow: 0 22px 55px rgba(16, 52, 117, .22); }
+.preview-shell::before { position: absolute; inset: 0; opacity: .38; background-image: linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px); background-size: 38px 38px; content: ""; }
+.preview-shell::after { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(65, 205, 224, .25), transparent 35%, transparent 62%, rgba(23, 105, 255, .32)); content: ""; }
+.preview-corner { position: absolute; z-index: 2; width: 17px; height: 17px; border-color: rgba(255,255,255,.75); }
+.tl { top: 17px; left: 17px; border-top: 1px solid; border-left: 1px solid; }.tr { top: 17px; right: 17px; border-top: 1px solid; border-right: 1px solid; }.bl { bottom: 17px; left: 17px; border-bottom: 1px solid; border-left: 1px solid; }.br { right: 17px; bottom: 17px; border-right: 1px solid; border-bottom: 1px solid; }
+.scanline { position: absolute; z-index: 1; width: 100%; height: 1px; opacity: .72; background: var(--lime); box-shadow: 0 0 22px var(--lime); animation: scan 5s linear infinite; }
+.dot-matrix { position: relative; z-index: 3; display: grid; grid-template-columns: repeat(60, 1fr); width: min(75%, 650px); aspect-ratio: 1.5 / 1; gap: clamp(1px,.27vw,3px); }
+.dot { min-width: 0; min-height: 0; border-radius: 50%; background: rgba(255,255,255,.13); box-shadow: inset 0 0 1px rgba(255,255,255,.34); }
+.dot.is-up { background: #fff; box-shadow: 0 0 8px rgba(255,255,255,.80), 0 0 19px rgba(91, 218, 239, .62); }
+.preview-footer { position: absolute; z-index: 4; right: 22px; bottom: 17px; left: 22px; display: flex; justify-content: space-between; color: rgba(255,255,255,.66); font: 400 8px "DM Mono", monospace; letter-spacing: .05em; }
+.preview-footer span:last-child { color: #c9ecff; }
+.transport-panel { display: flex; align-items: center; justify-content: space-between; gap: 22px; padding-top: 18px; }
+.transport-main { gap: 8px; }
+.play-button { min-height: 48px; display: inline-flex; align-items: center; gap: 8px; padding: 0 18px; border-radius: 999px; background: var(--blue); color: #fff; font: 800 11px "Gowun Dodum", sans-serif; transition: transform .16s cubic-bezier(.23, 1, .32, 1), background .16s; }
+.play-button:hover { background: #0b58df; transform: translateY(-1px); }.play-button.playing { background: #0f9c85; }.play-button:active, .frame-button:active, .video-button:active { transform: scale(.97); }
+.frame-button, .video-button { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 0 13px; border: 1px solid #cbd5e4; border-radius: 999px; background: #fff; color: #3e4d63; font: 700 10px "Gowun Dodum", sans-serif; transition: all .16s; }
+.frame-button { width: 48px; padding: 0; }.frame-button:hover, .video-button:hover:not(:disabled) { border-color: #8db9ff; color: var(--blue); background: var(--blue-mist); }
+.speed-control { flex: 1; justify-content: flex-end; gap: 9px; }.speed-control label { color: #667287; font: 600 10px "Gowun Dodum", sans-serif; }.speed-control input { width: min(180px, 32vw); height: 3px; margin: 0; accent-color: var(--blue); }.speed-control b { min-width: 38px; color: var(--blue); font: 500 10px "DM Mono", monospace; }
+
+.slow-explore { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 14px 18px; margin-top: 18px; padding: 16px; border: 1px solid #d8e2f0; border-radius: 17px; background: #fff; }
+.slow-explore.active { border-color: #8fb8fb; box-shadow: 0 8px 20px rgba(23,105,255,.07); }
+.slow-explore-copy { display: flex; align-items: center; gap: 10px; }.slow-explore-icon { width: 37px; height: 37px; display: grid; flex: 0 0 auto; place-items: center; border-radius: 50%; color: var(--blue); background: var(--blue-mist); }.slow-explore-copy p { margin: 0 0 2px; color: var(--ink); font: 800 11px "Gowun Dodum", sans-serif; }.slow-explore-copy small { display: block; color: var(--ink-soft); font: 400 9px/1.4 "Gowun Dodum", sans-serif; }
+.slow-explore-controls { display: flex; align-items: center; gap: 6px; }.slow-frame-button, .slow-listen-button { min-height: 39px; display: inline-flex; align-items: center; justify-content: center; gap: 5px; padding: 0 11px; border: 1px solid #cdd8e8; border-radius: 999px; background: #fff; color: #45536a; font: 700 10px "Gowun Dodum", sans-serif; transition: all .16s; }.slow-listen-button { border-color: var(--blue); background: var(--blue); color: #fff; }.slow-frame-button:hover { border-color: #8db9ff; color: var(--blue); background: var(--blue-mist); }.slow-listen-button:hover { background: #0d59df; }.slow-frame-button:active, .slow-listen-button:active { transform: scale(.97); }
+.review-quiz { grid-column: 1 / -1; display: grid; gap: 10px; width: 100%; min-width: 0; padding: 13px; border: 1px solid #dbe5f0; border-radius: 13px; background: #f9fbff; }.review-quiz.locked { opacity: .72; }.review-quiz.unlocked { border-color: #9ac0ff; background: linear-gradient(115deg, #f0f6ff, #f9fdff); }.review-heading { display: flex; align-items: center; gap: 8px; }.review-heading > div { min-width: 0; flex: 1; }.review-number { width: 35px; height: 27px; display: grid; place-items: center; border-radius: 8px; background: var(--blue); color: #fff; font: 800 8px "DM Mono", monospace; }.review-heading p { margin: 0; color: var(--ink); font: 800 10px "Gowun Dodum", sans-serif; }.review-heading small { display: block; margin-top: 2px; color: var(--ink-soft); font: 400 8px/1.35 "Gowun Dodum", sans-serif; }.review-heading b { padding: 4px 7px; border-radius: 999px; background: #e8f1ff; color: var(--blue); font: 700 8px "DM Mono", monospace; }.review-options { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }.review-options button { min-height: 41px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; border: 1px solid #d4deea; border-radius: 9px; background: #fff; color: #405068; font: 700 9px "Gowun Dodum", sans-serif; transition: all .16s; }.review-options button span { font-size: 17px; line-height: 1; }.review-options button:hover { border-color: #8db9ff; color: var(--blue); }.review-options button.chosen { border-color: var(--blue); }.review-options button.answer { border-color: #57c5a5; background: #effff9; color: var(--success); }.review-feedback { min-height: 14px; margin: 0; color: var(--ink-soft); font: 500 8px/1.4 "Gowun Dodum", sans-serif; }.review-quiz.correct .review-feedback { color: var(--success); }.review-quiz.wrong .review-feedback { color: #b66616; }.review-lock { display: flex; align-items: center; gap: 6px; color: var(--ink-soft); font: 500 8px/1.4 "Gowun Dodum", sans-serif; }.review-lock svg { color: var(--blue); }
+
+.status-deck { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 57px; padding: 0 clamp(20px, 4vw, 68px); border-top: 1px solid var(--line); background: #fff; }.status-message { gap: 10px; min-width: 0; }.status-icon { width: 24px; height: 24px; display: grid; flex: 0 0 auto; place-items: center; border-radius: 50%; background: #eaf2ff; color: var(--blue); }.status-icon.error { background: #fff0ef; color: var(--danger); }.status-message p { overflow: hidden; margin: 0; color: #647087; font: 500 9px "Gowun Dodum", sans-serif; text-overflow: ellipsis; white-space: nowrap; }.sdk-badge { gap: 7px; color: #647087; font: 500 9px "DM Mono", monospace; letter-spacing: .04em; }.sdk-badge svg { color: var(--blue); }.sdk-badge b { color: var(--ink); font-weight: 500; }
+
+@keyframes scan { from { transform: translateY(0); } to { transform: translateY(610px); } }
+@keyframes voicePulse { 50% { box-shadow: 0 0 0 6px rgba(23,105,255,.10), 0 8px 20px rgba(23,105,255,.20); } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; } }
+@media (max-width: 1030px) { .workspace { grid-template-columns: 310px minmax(0,1fr); gap: 30px; padding: 35px 25px 48px; }.intro-strip { padding: 44px 50px; }.intro-strip h2 { font-size: 43px; }.how-to { max-width: 345px; }.how-to p { font-size: 9px; }.preview-shell { min-height: 510px; } }
+@media (max-width: 820px) { .intro-strip { min-height: 240px; align-items: flex-start; flex-direction: column; }.intro-strip h2 { max-width: 600px; }.how-to { max-width: none; }.workspace { grid-template-columns: 1fr; }.stage { order: -1; }.control-rail { display: grid; grid-template-columns: 1fr 1fr; align-items: start; }.catalog-section, .mission-box { grid-column: span 2; }.pipeline-section, .connection-section { height: 100%; }.preview-shell { min-height: min(76vw, 590px); }.catalog-grid { max-height: 330px; } }
+@media (max-width: 600px) { .topbar { min-height: 66px; padding: 12px 18px; }.brand-mark { width: 30px; height: 30px; }.brand-lockup h1 { font-size: 16px; }.brand-lockup .eyebrow { display: none; }.topbar-right .connection-pill { display: none; }.topbar-right .compact-button { min-height: 37px; padding: 0 11px; font-size: 0; }.topbar-right .compact-button svg { margin: 0; }.intro-strip { min-height: 295px; padding: 37px 22px; }.intro-strip::before { right: -230px; bottom: -100px; }.intro-strip h2 { font-size: 37px; }.how-to { width: 100%; gap: 7px; padding: 12px; }.how-to p { font-size: 9px; }.how-to span { width: 23px; height: 23px; font-size: 9px; }.workspace { padding: 30px 18px 44px; gap: 24px; }.stage-bar { align-items: flex-start; flex-direction: column; gap: 10px; }.stage-bar h2 { font-size: 37px; }.matrix-stat { font-size: 13px; }.preview-shell { min-height: 74vw; border-radius: 17px; }.dot-matrix { width: 86%; }.preview-footer { right: 15px; bottom: 12px; left: 15px; font-size: 7px; }.preview-footer span:last-child { display: none; }.transport-panel { align-items: flex-start; flex-direction: column; gap: 13px; }.transport-main { width: 100%; flex-wrap: wrap; }.play-button { flex: 1; justify-content: center; }.video-button { flex: 1; justify-content: center; }.speed-control { width: 100%; justify-content: flex-start; }.speed-control input { flex: 1; width: auto; }.control-rail { grid-template-columns: 1fr; gap: 13px; }.catalog-section, .mission-box { grid-column: auto; }.rail-section { padding: 17px; border-radius: 15px; }.category-tabs { grid-template-columns: repeat(5, minmax(52px, 1fr)); overflow-x: auto; }.category-tabs button { min-width: 52px; }.catalog-grid { max-height: 350px; }.catalog-card { min-height: 68px; }.connection-section { min-height: auto; }.slow-explore { grid-template-columns: minmax(0, 1fr); padding: 13px; }.slow-explore-controls { min-width: 0; width: 100%; }.slow-frame-button { padding: 0 9px; }.slow-listen-button { flex: 1; }.review-options { grid-template-columns: repeat(2,1fr); }.review-options button { min-height: 46px; flex-direction: row; gap: 6px; }.status-deck { min-height: 55px; padding: 0 18px; }.sdk-badge { display: none; }.status-message p { font-size: 9px; } }

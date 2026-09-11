@@ -53,3 +53,15 @@ A physical DotPad was not available in the preview environment, so Bluetooth/USB
 - `pnpm check` and `pnpm build` passed after the update.
 - Browser interaction test: manually advanced the fish sequence from frame 1 to frame 6; the review card changed from locked `0 / 6` through `5 / 6` to unlocked with fish, dolphin, whale, and octopus choices. Both wrong-answer hint and correct-answer completion feedback were verified.
 - Full-page 390×844 visual review verified that the review card is directly below slow-exploration controls without horizontal overflow and remains legible before the catalog.
+
+
+## SAM2-inspired research landing redesign — 2026-09-11
+
+The interface was reworked around a clean research-landing visual system: an off-white canvas, cobalt-blue hero field, oversized Korean headline, restrained rounded controls, light card surfaces, and a high-contrast blue tactile-motion stage. The DotPad output, 17-animal catalog, voice guidance, motion quizzes, video export, and manual slow-exploration controls remain functionally unchanged.
+
+| Validation area | Result |
+|---|---|
+| TypeScript and production build | Passed with `pnpm check` and `pnpm build` |
+| Desktop visual review | At 1440×960, the blue hero, left catalog rail, prominent tactile stage, and white research-style control surfaces render without clipping |
+| Mobile visual review | At 390×844, the page follows a clear sequence of hero, tactile animation, transport controls, slow exploration, catalog, learning prompt, quiz, pipeline, and connection controls |
+| Catalog interaction | The Water filter reduced the catalog to fish, dolphin, whale, octopus, and turtle after the visual redesign |
